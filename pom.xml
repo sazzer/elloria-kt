@@ -18,7 +18,9 @@
     <prerequisites>
         <maven>3.0.5</maven>
     </prerequisites>
-    <modules></modules>
+    <modules>
+        <module>webapp</module>
+    </modules>
     <scm>
         <connection>scm:git:https://github.com/sazzer/elloria.git</connection>
         <developerConnection>scm:git:git@github.com:sazzer/elloria.git</developerConnection>
