@@ -181,6 +181,11 @@
                     <version>2.17</version>
                 </plugin>
                 <plugin>
+                    <groupId>org.eclipse.jetty</groupId>
+                    <artifactId>jetty-maven-plugin</artifactId>
+                    <version>9.2.1.v20140609</version>
+                </plugin>
+                <plugin>
                     <groupId>org.jetbrains.kotlin</groupId>
                     <artifactId>kotlin-maven-plugin</artifactId>
                     <version>${kotlin-version}</version>
