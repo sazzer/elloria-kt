@@ -38,8 +38,9 @@
         <!-- Other stuff -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <!-- Dependency Versions -->
+        <version.jackson>2.5.0</version.jackson>
         <version.kotlin>0.10.195</version.kotlin>
-        <version.slf4j>1.7.9</version.slf4j>
+        <version.slf4j>1.7.10</version.slf4j>
         <version.spring>4.1.4.RELEASE</version.spring>
     </properties>
     <dependencyManagement>
@@ -50,6 +51,31 @@
                 <version>1.1.2</version>
             </dependency>
             <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-annotations</artifactId>
+                <version>${version.jackson}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-core</artifactId>
+                <version>${version.jackson}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-databind</artifactId>
+                <version>${version.jackson}</version>
+            </dependency>
+            <dependency>
+                <groupId>javax.servlet</groupId>
+                <artifactId>javax.servlet-api</artifactId>
+                <version>3.1.0</version>
+            </dependency>
+            <dependency>
+                <groupId>javax.servlet</groupId>
+                <artifactId>jstl</artifactId>
+                <version>1.1.2</version>
+            </dependency>
+            <dependency>
                 <groupId>junit</groupId>
                 <artifactId>junit</artifactId>
                 <version>4.12</version>
@@ -57,7 +83,7 @@
             <dependency>
                 <groupId>org.easymock</groupId>
                 <artifactId>easymock</artifactId>
-                <version>3.3</version>
+                <version>3.3.1</version>
             </dependency>
             <dependency>
                 <groupId>org.jetbrains.kotlin</groupId>
@@ -175,6 +201,11 @@
                     </configuration>
                 </plugin>
                 <plugin>
+                    <groupId>com.rodiontsev.maven.plugins</groupId>
+                    <artifactId>maven-build-info-plugin</artifactId>
+                    <version>1.0</version>
+                </plugin>
+                <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-clean-plugin</artifactId>
                     <version>2.6.1</version>
@@ -182,7 +213,8 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
-                    <version>3.2</version>
+                    <!-- Keep this at 3.1. Version 3.2 breaks the Kotlin plugin since it adds a non-existant directory to the sources -->
+                    <version>3.1</version>
                     <configuration>
                         <source>1.8</source>
                         <target>1.8</target>
@@ -258,7 +290,7 @@
                             <goal>verify</goal>
                         </goals>
                         <configuration>
-                            <verifyFail>Stop</verifyFail>
+                            <xverifyFail>Stop</xverifyFail>
                         </configuration>
                     </execution>
                 </executions>

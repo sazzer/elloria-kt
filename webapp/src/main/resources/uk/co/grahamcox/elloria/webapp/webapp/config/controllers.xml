@@ -5,4 +5,8 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/websocket http://www.springframework.org/schema/websocket/spring-websocket.xsd">
 
+    <bean class="uk.co.grahamcox.elloria.webapp.DebugController">
+        <constructor-arg index="0" ref="clock" />
+        <constructor-arg index="1" value="classpath:/build.info" />
+    </bean>
 </beans>
