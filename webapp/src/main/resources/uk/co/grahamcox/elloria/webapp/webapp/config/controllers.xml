@@ -13,4 +13,6 @@
     <bean class="uk.co.grahamcox.elloria.webapp.IndexController">
         <constructor-arg index="0" ref="clock" />
     </bean>
+
+    <bean class="uk.co.grahamcox.elloria.webapp.ApiErrorController" />
 </beans>

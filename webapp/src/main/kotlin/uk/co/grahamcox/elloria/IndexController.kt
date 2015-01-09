@@ -5,7 +5,6 @@ import org.springframework.web.bind.annotation.RequestMapping
 import java.time.Clock
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
-import org.springframework.web.bind.annotation.ResponseBody
 import org.springframework.web.servlet.ModelAndView
 
 /**
@@ -19,7 +18,6 @@ class IndexController(private val clock: Clock) {
      * @return the index page
      */
     [RequestMapping(value = array("/**"))]
-    [ResponseBody]
     fun getIndex(): ModelAndView {
         val response = ModelAndView("/index")
         response.addObject("now", ZonedDateTime.now(clock).format(DateTimeFormatter.ISO_ZONED_DATE_TIME))
