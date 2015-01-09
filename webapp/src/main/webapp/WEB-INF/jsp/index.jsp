@@ -5,6 +5,9 @@
 <html>
     <head>
         <title><spring:message code="page.title" /></title>
+        <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/3.3.1/css/bootstrap.css" />
+        <script type="text/javascript" src="/webjars/react/0.12.2/react.js"></script>
+        <script type="text/javascript" src="/webjars/react-bootstrap/0.13.0/react-bootstrap.js"></script>
     </head>
     <body>
 
