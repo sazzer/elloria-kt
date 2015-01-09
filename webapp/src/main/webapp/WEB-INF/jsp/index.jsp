@@ -5,7 +5,6 @@
 <html>
     <head>
         <title><spring:message code="page.title" /></title>
-        <!-- <c:out value="${now}" /> -->
     </head>
     <body>
 

@@ -9,10 +9,4 @@
         <constructor-arg index="0" ref="clock" />
         <constructor-arg index="1" value="classpath:/build.info" />
     </bean>
-
-    <bean class="uk.co.grahamcox.elloria.webapp.IndexController">
-        <constructor-arg index="0" ref="clock" />
-    </bean>
-
-    <bean class="uk.co.grahamcox.elloria.webapp.ApiErrorController" />
 </beans>
