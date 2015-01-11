@@ -10,6 +10,7 @@
         <script type="text/javascript">
             require.config({
                 "paths": {
+                    Fluxxor: "/webjars/fluxxor/1.5.0/fluxxor",
                     React: "/webjars/react/0.12.2/react",
                     ReactBootstrap: "/webjars/react-bootstrap/0.13.0/react-bootstrap"
                 }

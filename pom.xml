@@ -133,6 +133,11 @@
             </dependency>
             <dependency>
                 <groupId>org.webjars</groupId>
+                <artifactId>fluxxor</artifactId>
+                <version>1.5.0</version>
+            </dependency>
+            <dependency>
+                <groupId>org.webjars</groupId>
                 <artifactId>react</artifactId>
                 <version>0.12.2</version>
             </dependency>
@@ -331,7 +336,7 @@
                             <goal>verify</goal>
                         </goals>
                         <configuration>
-                            <xverifyFail>Stop</xverifyFail>
+                            <verifyFail>Stop</verifyFail>
                         </configuration>
                     </execution>
                 </executions>

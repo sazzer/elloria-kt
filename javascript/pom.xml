@@ -17,6 +17,11 @@
         </dependency>
         <dependency>
             <groupId>org.webjars</groupId>
+            <artifactId>fluxxor</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.webjars</groupId>
             <artifactId>react</artifactId>
             <scope>runtime</scope>
         </dependency>
