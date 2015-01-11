@@ -1,3 +1,3 @@
-define(['test'], function(test) {
+define(['test', 'React'], function(test) {
     test.hello();
 });
