@@ -1,5 +1,7 @@
 define([], function() {
     return React.createClass({displayName: 'Header',
+        mixins: [ReactIntl.Mixin],
+
         render: function() {
             return React.createElement('nav', {
                 className: 'navbar navbar-inverse navbar-static-top',
@@ -22,7 +24,12 @@ define([], function() {
                             React.createElement('span', {className: 'icon-bar'}),
                             React.createElement('span', {className: 'icon-bar'})
                         ]),
-                        React.createElement(ReactRouter.Link, {className: 'navbar-brand', to: 'home'}, 'Elloria')
+                        React.createElement(ReactRouter.Link, {
+                            className: 'navbar-brand', 
+                            to: 'home'
+                        }, [
+                            React.createElement(ReactIntl.Message, {}, this.getIntlMessage('page.title'))
+                        ])
                     ]),
                     React.createElement('div', {
                         className: 'collapse navbar-collapse',

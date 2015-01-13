@@ -19,8 +19,16 @@ define(['ui/app'], function(App) {
         React.createElement(ReactRouter.Route, {name: "state", path: "state/:abbr", handler: State})
     ]);
 
-    ReactRouter.run(routes, ReactRouter.HistoryLocation, function(Handler) {
-        React.render(React.createElement(Handler, null), document.body)
+    React.withContext({
+        messages: {
+            page: {
+                title: 'Elloria'
+            }
+        }
+    }, function() {
+        ReactRouter.run(routes, ReactRouter.HistoryLocation, function(Handler) {
+            React.render(React.createElement(Handler, null), document.body)
+        });
     });
 
 });
