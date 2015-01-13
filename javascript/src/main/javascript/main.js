@@ -1,4 +1,4 @@
-define(['test'], function(test) {
+define(['ui/app'], function(App) {
 
     var Index = React.createClass({displayName: "Index",
         render: function() {
@@ -14,18 +14,7 @@ define(['test'], function(test) {
 
     });
 
-    var App = React.createClass({displayName: "App",
-        render: function() {
-            return React.createElement("div", {}, [
-                React.createElement(ReactRouter.Link, {to: "state", params: {abbr: "OH"}}, "Ohio"),
-                React.createElement(ReactRouter.Link, {to: "state", params: {abbr: "TX"}}, "Texas"),
-                React.createElement(ReactRouter.Link, {to: "state", params: {abbr: "CA"}}, "California"),
-                React.createElement(ReactRouter.RouteHandler, {})
-            ]);
-        }
-    });
-
-    var routes = React.createElement(ReactRouter.Route, {handler: App}, [
+    var routes = React.createElement(ReactRouter.Route, {name: 'home', path: '/', handler: App}, [
         React.createElement(ReactRouter.DefaultRoute, {handler: Index}),
         React.createElement(ReactRouter.Route, {name: "state", path: "state/:abbr", handler: State})
     ]);
