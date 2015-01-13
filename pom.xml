@@ -148,11 +148,6 @@
             </dependency>
             <dependency>
                 <groupId>org.webjars</groupId>
-                <artifactId>react-bootstrap</artifactId>
-                <version>0.13.0</version>
-            </dependency>
-            <dependency>
-                <groupId>org.webjars</groupId>
                 <artifactId>react-router</artifactId>
                 <version>0.11.6</version>
             </dependency>

@@ -27,11 +27,6 @@
         </dependency>
         <dependency>
             <groupId>org.webjars</groupId>
-            <artifactId>react-bootstrap</artifactId>
-            <scope>runtime</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.webjars</groupId>
             <artifactId>react-router</artifactId>
             <scope>runtime</scope>
         </dependency>
