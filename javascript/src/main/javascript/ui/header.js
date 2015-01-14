@@ -3,7 +3,21 @@ define(['ui/NavBar'], function(NavBar) {
         mixins: [ReactIntl.Mixin],
 
         render: function() {
-            return React.createElement(NavBar);
+            return React.createElement(NavBar, {
+                links: [{
+                    to: 'state',
+                    params: {abbr: 'OH'},
+                    label: 'page.header.world.label'
+                }, {
+                    to: 'state',
+                    params: {abbr: 'TX'},
+                    label: 'page.header.games.label'
+                }, {
+                    to: 'state',
+                    params: {abbr: 'CA'},
+                    label: 'page.header.profile.label'
+                }]
+            });
         }
     });
 });

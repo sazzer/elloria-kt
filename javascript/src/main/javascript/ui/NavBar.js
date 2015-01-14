@@ -2,6 +2,7 @@ define(['bootstrap/nav/NavBarHeader', 'bootstrap/nav/NavLink'], function(NavBarH
     return React.createClass({displayName: 'NavBarHeader',
         mixins: [ReactIntl.Mixin],
         propTypes: {
+            'params': React.PropTypes.array
         },
 
         render: function() {
@@ -15,7 +16,7 @@ define(['bootstrap/nav/NavBarHeader', 'bootstrap/nav/NavLink'], function(NavBarH
                     React.createElement(NavBarHeader, {
                         label: 'page.title',
                         collapseLabel: 'page.header.toggleNavigation',
-                        collapseTarget: '#elloria-navbar-collapse'
+                        collapseTarget: '#elloria-navbar-collapse',
                         to: 'home'
                     }),
                     React.createElement('div', {
@@ -24,11 +25,13 @@ define(['bootstrap/nav/NavBarHeader', 'bootstrap/nav/NavLink'], function(NavBarH
                     }, [
                         React.createElement('ul', {
                             className: 'nav navbar-nav'
-                        }, [
-                            React.createElement(NavLink, {to: 'home', label: 'page.header.world.label'}),
-                            React.createElement(NavLink, {to: 'home', label: 'page.header.games.label'}),
-                            React.createElement(NavLink, {to: 'home', label: 'page.header.profile.label'})
-                        ])
+                        }, this.props.links.map(function(link) {
+                            return React.createElement(NavLink, {
+                                to: link.to,
+                                params: link.params,
+                                label: link.label
+                            });
+                        }))
                     ])
                 ])
             ]);
