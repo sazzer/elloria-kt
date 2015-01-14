@@ -1,4 +1,4 @@
-define([], function() {
+define(['bootstrap/nav/NavLink', 'bootstrap/nav/CollapseButton'], function(NavLink, CollapseButton) {
     return React.createClass({displayName: 'Header',
         mixins: [ReactIntl.Mixin],
 
@@ -13,17 +13,10 @@ define([], function() {
                     React.createElement('div', {
                         className: 'navbar-header'
                     }, [
-                        React.createElement('button', {
-                            type: 'button',
-                            className: 'navbar-toggle',
-                            'data-toggle': 'collapse',
-                            'data-target': '#elloria-navbar-collapse'
-                        }, [
-                            React.createElement('span', {className: 'sr-only'}, 'Toggle navigation'),
-                            React.createElement('span', {className: 'icon-bar'}),
-                            React.createElement('span', {className: 'icon-bar'}),
-                            React.createElement('span', {className: 'icon-bar'})
-                        ]),
+                        React.createElement(CollapseButton, {
+                            label: 'page.header.toggleNavigation',
+                            target: '#elloria-navbar-collapse'
+                        }),
                         React.createElement(ReactRouter.Link, {
                             className: 'navbar-brand', 
                             to: 'home'
@@ -38,15 +31,9 @@ define([], function() {
                         React.createElement('ul', {
                             className: 'nav navbar-nav'
                         }, [
-                            React.createElement('li', {}, [
-                                React.createElement(ReactRouter.Link, {to: 'state', params: {abbr: 'OH'}}, 'About')
-                            ]),
-                            React.createElement('li', {}, [
-                                React.createElement(ReactRouter.Link, {to: 'state', params: {abbr: 'TX'}}, 'Services')
-                            ]),
-                            React.createElement('li', {}, [
-                                React.createElement(ReactRouter.Link, {to: 'state', params: {abbr: 'CA'}}, 'Contact')
-                            ])
+                            React.createElement(NavLink, {to: 'home', label: 'page.header.world.label'}),
+                            React.createElement(NavLink, {to: 'home', label: 'page.header.games.label'}),
+                            React.createElement(NavLink, {to: 'home', label: 'page.header.profile.label'})
                         ])
                     ])
                 ])
