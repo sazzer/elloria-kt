@@ -20,6 +20,22 @@ class MessagesController(private val messages: AccessableResourceBundleMessageSo
     val objectMapper = ObjectMapper()
 
     /**
+     * Get the correct Child Node out of the map. Note that this is a separate function because
+     * inlining it below just doesn't work for some reason
+     * @param initial The map to get the node from
+     * @param key The key to look up
+     * @return the next node down
+     */
+    private fun getChildNode(initial: HashMap<String, Any>, key: String) : HashMap<String, Any> {
+        if (!initial.containsKey(key)) {
+            val newValue : HashMap<String, Any> = hashMapOf()
+            initial.put(key, newValue)
+        }
+
+        return initial.get(key) as HashMap<String, Any>
+    }
+
+    /**
      * Get the messages for the UI
      * @return the messages
      */
@@ -35,11 +51,7 @@ class MessagesController(private val messages: AccessableResourceBundleMessageSo
 
             keyParts.take(keyParts.size - 1).fold(root) { initial, next ->
                 when (initial) {
-                    is Map<String, Any> -> {
-                        val newValue : HashMap<String, Any> = hashMapOf()
-                        initial.putIfAbsent(next, newValue)
-                        newValue
-                    }
+                    is HashMap<String, Any> -> getChildNode(initial, next)
                     else -> throw IllegalStateException("Trying to add a child node to a leaf")
                 }
             }.putIfAbsent(leaf, message)
