@@ -15,7 +15,8 @@ define(['ui/NavBar'], function(NavBar) {
                 }, {
                     to: 'state',
                     params: {abbr: 'CA'},
-                    label: 'page.header.profile.label'
+                    label: 'page.header.profile.label',
+                    align: 'right'
                 }]
             });
         }

@@ -24,11 +24,15 @@ define(['bootstrap/nav/NavBarHeader', 'bootstrap/nav/NavBarLinks'], function(Nav
                         id: 'elloria-navbar-collapse'
                     }, [
                         React.createElement(NavBarLinks, {
-                            links: this.props.links,
+                            links: this.props.links.filter(function(link) {
+                                return link.align !== 'right'
+                            }),
                             align: 'left'
                         }),
                         React.createElement(NavBarLinks, {
-                            links: this.props.links,
+                            links: this.props.links.filter(function(link) {
+                                return link.align === 'right'
+                            }),
                             align: 'right'
                         })
                     ])
