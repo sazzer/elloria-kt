@@ -20,11 +20,7 @@ define(['ui/app'], function(App) {
     ]);
 
     React.withContext({
-        messages: {
-            page: {
-                title: 'Elloria'
-            }
-        }
+        messages: messages
     }, function() {
         ReactRouter.run(routes, ReactRouter.HistoryLocation, function(Handler) {
             React.render(React.createElement(Handler, null), document.body)

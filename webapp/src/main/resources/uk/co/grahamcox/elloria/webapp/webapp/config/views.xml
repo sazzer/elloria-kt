@@ -11,7 +11,7 @@
         <property name="suffix" value=".jsp" />
     </bean>
 
-    <bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+    <bean id="messageSource" class="org.springframework.context.support.AccessableResourceBundleMessageSource">
         <property name="basenames">
             <list>
                 <value>classpath:/uk/co/grahamcox/elloria/webapp/messages</value>
