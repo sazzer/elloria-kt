@@ -1,5 +1,10 @@
 define(['ui/NavBar', 'bootstrap/nav/NavLink', 'bootstrap/nav/NavDropdown'], function(NavBar, NavLink, NavDropdown) {
     return React.createClass({displayName: 'Header',
+        getInitialState: function() {
+            return {
+                loggedIn: false
+            };
+        },
 
         render: function() {
             var left = [
@@ -29,14 +34,26 @@ define(['ui/NavBar', 'bootstrap/nav/NavLink', 'bootstrap/nav/NavDropdown'], func
                     ]
                 })
             ];
-            var right = [
-                React.createElement(NavLink, {
+            var right = [];
+            if (this.state.loggedIn) {
+                right.push(React.createElement(NavLink, {
                     to: 'state',
                     params: {abbr: 'CA'},
                     label: 'page.header.profile.label'
-                })
-            ];
+                }));
+            } else {
+                right.push(React.createElement(NavLink, {
+                    to: 'state',
+                    params: {abbr: 'CA'},
+                    onClick: this.handleLoginClick,
+                    label: 'page.header.login.label'
+                }));
+            }
             return React.createElement(NavBar, {left: left, right: right});
+        },
+
+        handleLoginClick: function(e) {
+            this.setState({'loggedIn': true});
         }
     });
 });

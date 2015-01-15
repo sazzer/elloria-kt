@@ -3,19 +3,27 @@ define([], function() {
         mixins: [ReactIntl.Mixin],
         propTypes: {
             'label': React.PropTypes.string.isRequired,
-            'to': React.PropTypes.string.isRequired,
-            'params': React.PropTypes.object
+            'to': React.PropTypes.string,
+            'params': React.PropTypes.object,
+            'onClick': React.PropTypes.func
         },
 
         render: function() {
-            return React.createElement('li', {}, [
-                React.createElement(ReactRouter.Link, {
+            var link,
+                messageElement = React.createElement(ReactIntl.Message, {}, this.getIntlMessage(this.props.label));
+            if (this.props.onClick) {
+                link = React.createElement('a', {
+                    href: '#',
+                    onClick: this.props.onClick
+                }, messageElement);
+            } else {
+                link = React.createElement(ReactRouter.Link, {
                     to: this.props.to,
                     params: this.props.params
-                }, [
-                    React.createElement(ReactIntl.Message, {}, this.getIntlMessage(this.props.label))
-                ])
-            ]);
+                }, messageElement);
+            }
+
+            return React.createElement('li', {}, link);
         }
     });
 });
