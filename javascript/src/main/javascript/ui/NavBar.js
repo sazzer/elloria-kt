@@ -2,7 +2,8 @@ define(['bootstrap/nav/NavBarHeader', 'bootstrap/nav/NavBarLinks'], function(Nav
     return React.createClass({displayName: 'NavBarHeader',
         mixins: [ReactIntl.Mixin],
         propTypes: {
-            'links': React.PropTypes.array
+            'left': React.PropTypes.array,
+            'right': React.PropTypes.array
         },
 
         render: function() {
@@ -24,15 +25,11 @@ define(['bootstrap/nav/NavBarHeader', 'bootstrap/nav/NavBarLinks'], function(Nav
                         id: 'elloria-navbar-collapse'
                     }, [
                         React.createElement(NavBarLinks, {
-                            links: this.props.links.filter(function(link) {
-                                return link.align !== 'right'
-                            }),
+                            links: this.props.left,
                             align: 'left'
                         }),
                         React.createElement(NavBarLinks, {
-                            links: this.props.links.filter(function(link) {
-                                return link.align === 'right'
-                            }),
+                            links: this.props.right,
                             align: 'right'
                         })
                     ])

@@ -8,13 +8,7 @@ define(['bootstrap/nav/NavLink'], function(NavLink) {
         render: function() {
             return React.createElement('ul', {
                 className: ['nav', 'navbar-nav', this.props.align ? 'navbar-' + this.props.align : ''].join(' ')
-            }, this.props.links.map(function(link) {
-                return React.createElement(NavLink, {
-                    to: link.to,
-                    params: link.params,
-                    label: link.label
-                });
-            }));
+            }, this.props.links);
         }
     });
 });
