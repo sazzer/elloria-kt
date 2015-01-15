@@ -1,6 +1,5 @@
 define(['bootstrap/nav/NavBarHeader', 'bootstrap/nav/NavBarLinks'], function(NavBarHeader, NavBarLinks) {
     return React.createClass({displayName: 'NavBarHeader',
-        mixins: [ReactIntl.Mixin],
         propTypes: {
             'left': React.PropTypes.array,
             'right': React.PropTypes.array

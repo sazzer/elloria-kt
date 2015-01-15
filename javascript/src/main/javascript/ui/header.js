@@ -1,6 +1,5 @@
 define(['ui/NavBar', 'bootstrap/nav/NavLink', 'bootstrap/nav/NavDropdown'], function(NavBar, NavLink, NavDropdown) {
     return React.createClass({displayName: 'Header',
-        mixins: [ReactIntl.Mixin],
 
         render: function() {
             var left = [
