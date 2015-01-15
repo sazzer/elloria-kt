@@ -15,12 +15,17 @@ define(['ui/NavBar', 'bootstrap/nav/NavLink', 'bootstrap/nav/NavDropdown'], func
                         React.createElement(NavLink, {
                             to: 'state',
                             params: {abbr: 'TX'},
-                            label: 'page.header.games.label'
+                            label: 'page.header.games.roguelike'
                         }),
                         React.createElement(NavLink, {
                             to: 'state',
                             params: {abbr: 'TY'},
-                            label: 'page.header.games.label'
+                            label: 'page.header.games.mud'
+                        }),
+                        React.createElement(NavLink, {
+                            to: 'state',
+                            params: {abbr: 'TZ'},
+                            label: 'page.header.games.tcg'
                         })
                     ]
                 })
