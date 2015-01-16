@@ -1,7 +1,8 @@
-define(['bootstrap/Dialog'], function(Dialog) {
+define(['bootstrap/Dialog', 'bootstrap/form/Form', 'bootstrap/form/Input'], function(Dialog, Form, Input) {
     return React.createClass({displayName: 'LoginDialog',
         show: function() {
             this.refs.dialog.show();
+            this.refs.username.focus();
         },
         render: function() {
             return React.createElement(Dialog, {
@@ -18,7 +19,22 @@ define(['bootstrap/Dialog'], function(Dialog) {
                     }
                 ]
             }, [
-                React.createElement('p', {}, 'One fine body')
+                React.createElement(Form, {}, [
+                    React.createElement(Input, {
+                        name: 'username',
+                        label: 'loginDialog.form.username.label',
+                        placeholder: 'loginDialog.form.username.placeholder',
+                        type: 'email',
+                        ref: 'username'
+                    }),
+                    React.createElement(Input, {
+                        name: 'password',
+                        label: 'loginDialog.form.password.label',
+                        placeholder: 'loginDialog.form.password.placeholder',
+                        type: 'password',
+                        ref: 'password'
+                    })
+                ])
             ]);
         }
     });
