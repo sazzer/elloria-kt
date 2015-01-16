@@ -3,7 +3,8 @@ define([], function() {
         mixins: [ReactIntl.Mixin],
         propTypes: {
             'label': React.PropTypes.string.isRequired,
-            'buttons': React.PropTypes.array.isRequired
+            'buttons': React.PropTypes.array.isRequired,
+            'onShow': React.PropTypes.func
         },
 
         /**
@@ -12,6 +13,9 @@ define([], function() {
         show: function() {
             var modalBase = this.refs.modalBase,
                 domNode = modalBase.getDOMNode();
+            if (this.props.onShow) {
+                $(domNode).on('shown.bs.modal', this.props.onShow);
+            }
             $(domNode).modal();
         },
         /**

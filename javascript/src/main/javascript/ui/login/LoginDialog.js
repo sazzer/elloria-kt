@@ -9,6 +9,8 @@ define(['bootstrap/Dialog', 'bootstrap/form/Form', 'bootstrap/form/Input'], func
         show: function() {
             this.setState({username: '', password: ''});
             this.refs.dialog.show();
+        }, 
+        setFocusOnShow: function() {
             this.refs.username.focus();
         },
         onUsernameChange: function(e) {
@@ -21,6 +23,7 @@ define(['bootstrap/Dialog', 'bootstrap/form/Form', 'bootstrap/form/Input'], func
             return React.createElement(Dialog, {
                 ref: 'dialog',
                 label: 'page.header.login.label',
+                onShow: this.setFocusOnShow,
                 buttons: [
                     {
                         label: 'loginDialog.buttons.close',
