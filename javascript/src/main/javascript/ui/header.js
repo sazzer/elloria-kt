@@ -1,4 +1,4 @@
-define(['ui/NavBar', 'bootstrap/nav/NavLink', 'bootstrap/nav/NavDropdown'], function(NavBar, NavLink, NavDropdown) {
+define(['ui/NavBar', 'bootstrap/nav/NavLink', 'bootstrap/nav/NavDropdown', 'ui/login/LoginDialog'], function(NavBar, NavLink, NavDropdown, LoginDialog) {
     return React.createClass({displayName: 'Header',
         getInitialState: function() {
             return {
@@ -49,11 +49,14 @@ define(['ui/NavBar', 'bootstrap/nav/NavLink', 'bootstrap/nav/NavDropdown'], func
                     label: 'page.header.login.label'
                 }));
             }
-            return React.createElement(NavBar, {left: left, right: right});
+            return React.createElement('div', {}, [
+                React.createElement(NavBar, {left: left, right: right}),
+                React.createElement(LoginDialog, {ref: 'loginDialog'})
+            ]);
         },
 
         handleLoginClick: function(e) {
-            this.setState({'loggedIn': true});
+            this.refs.loginDialog.show();
         }
     });
 });
