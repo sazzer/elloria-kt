@@ -1,4 +1,4 @@
-define(['ui/app', 'flux'], function(App, flux) {
+define(['ui/app', 'flux/flux'], function(App, flux) {
 
     var Index = React.createClass({displayName: "Index",
         render: function() {

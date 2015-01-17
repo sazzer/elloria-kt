@@ -21,7 +21,7 @@ define(['bootstrap/Dialog', 'bootstrap/form/Form', 'bootstrap/form/Input'], func
             this.setState({password: e.target.value});
         }, 
         onSubmit: function() {
-            this.getFlux().actions.login(this.state.username, this.state.password);
+            this.getFlux().actions.Login.login(this.state.username, this.state.password);
         },
         render: function() {
             return React.createElement(Dialog, {
