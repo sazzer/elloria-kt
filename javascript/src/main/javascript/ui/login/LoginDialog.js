@@ -19,6 +19,8 @@ define(['bootstrap/Dialog', 'bootstrap/form/Form', 'bootstrap/form/Input'], func
         },
         onPasswordChange: function(e) {
             this.setState({password: e.target.value});
+        }, 
+        onSubmit: function() {
             this.getFlux().actions.login(this.state.username, this.state.password);
         },
         render: function() {
@@ -33,7 +35,8 @@ define(['bootstrap/Dialog', 'bootstrap/form/Form', 'bootstrap/form/Input'], func
                         dismiss: true
                     }, {
                         label: 'loginDialog.buttons.login',
-                        primaryButton: true
+                        primaryButton: true,
+                        onClick: this.onSubmit
                     }
                 ]
             }, [

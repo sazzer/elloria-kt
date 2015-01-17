@@ -26,7 +26,8 @@ define([], function() {
                 var label = this.getIntlMessage(button.label);
                 var settings = {
                     type: 'button', 
-                    className: ['btn']
+                    className: ['btn'],
+                    onClick: button.onClick
                 };
 
                 if (button.dismiss) {
