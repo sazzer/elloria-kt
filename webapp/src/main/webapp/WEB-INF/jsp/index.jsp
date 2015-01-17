@@ -17,6 +17,7 @@
         <script type="text/javascript" src="/webjars/react-router/0.11.6/react-router.js"></script>
         <script type="text/javascript" src="/javascript/external/react-intl.js"></script>
         <script type="text/javascript" src="/messages.js"></script>
+        <script type="text/javascript" src="/webjars/fluxxor/1.5.0/fluxxor.js"></script>
         <script type="text/javascript" src="/webjars/requirejs/2.1.15/require.js" data-main="main"></script>
         <script type="text/javascript" src="/javascript/built/elloria.js"></script>
     </head>

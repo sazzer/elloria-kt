@@ -1,5 +1,6 @@
 define(['bootstrap/Dialog', 'bootstrap/form/Form', 'bootstrap/form/Input'], function(Dialog, Form, Input) {
     return React.createClass({displayName: 'LoginDialog',
+        mixins: [Fluxxor.FluxMixin(React)],
         getInitialState: function() {
             return {
                 username: '',
@@ -18,6 +19,7 @@ define(['bootstrap/Dialog', 'bootstrap/form/Form', 'bootstrap/form/Input'], func
         },
         onPasswordChange: function(e) {
             this.setState({password: e.target.value});
+            this.getFlux().actions.login(this.state.username, this.state.password);
         },
         render: function() {
             return React.createElement(Dialog, {

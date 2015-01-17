@@ -1,4 +1,4 @@
-define(['ui/app'], function(App) {
+define(['ui/app', 'flux'], function(App, flux) {
 
     var Index = React.createClass({displayName: "Index",
         render: function() {
@@ -20,7 +20,8 @@ define(['ui/app'], function(App) {
     ]);
 
     React.withContext({
-        messages: messages
+        messages: messages,
+        flux: flux,
     }, function() {
         ReactRouter.run(routes, ReactRouter.HistoryLocation, function(Handler) {
             React.render(React.createElement(Handler, null), document.body)
