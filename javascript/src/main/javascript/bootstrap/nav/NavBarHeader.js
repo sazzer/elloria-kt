@@ -1,4 +1,7 @@
 define(['bootstrap/nav/CollapseButton'], function(CollapseButton) {
+    /**
+     * Wrapper around the header in a Bootstrap Nav
+     */
     return React.createClass({displayName: 'NavBarHeader',
         mixins: [ReactIntl.Mixin],
         propTypes: {
@@ -9,6 +12,10 @@ define(['bootstrap/nav/CollapseButton'], function(CollapseButton) {
             'params': React.PropTypes.object
         },
 
+        /**
+         * Render the React nodes that represent the header
+         * @return {ReactElement} the React representation of the header
+         */
         render: function() {
             return React.createElement('div', {
                 className: 'navbar-header'

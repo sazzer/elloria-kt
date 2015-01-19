@@ -1,4 +1,7 @@
 define([], function() {
+    /**
+     * Wrapper around a Collapse Button as part of a Bootstrap Nav
+     */
     return React.createClass({displayName: 'CollapseButton',
         mixins: [ReactIntl.Mixin],
         propTypes: {
@@ -6,6 +9,10 @@ define([], function() {
             'target': React.PropTypes.string
         },
 
+        /**
+         * Render the React nodes that represent the collapse button
+         * @return {ReactElement} the React representation of the collapse button
+         */
         render: function() {
             return React.createElement('button', {
                 type: 'button',

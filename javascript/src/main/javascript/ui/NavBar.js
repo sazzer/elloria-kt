@@ -1,10 +1,17 @@
 define(['bootstrap/nav/NavBarHeader', 'bootstrap/nav/NavBarLinks'], function(NavBarHeader, NavBarLinks) {
+    /**
+     * Create the navigation bar in the UI Header
+     */
     return React.createClass({displayName: 'NavBarHeader',
         propTypes: {
             'left': React.PropTypes.array,
             'right': React.PropTypes.array
         },
 
+        /**
+         * Render the navigation bar
+         * @returns {ReactElement} the React representation of the navigation bar
+         */
         render: function() {
             return React.createElement('nav', {
                 className: 'navbar navbar-inverse navbar-static-top',

@@ -1,4 +1,7 @@
 define([], function() {
+    /**
+     * Wrapper around a Bootstrap Dialog
+     */
     return React.createClass({displayName: 'Dialog',
         mixins: [ReactIntl.Mixin],
         propTypes: {
@@ -20,6 +23,7 @@ define([], function() {
         },
         /**
          * Render the React nodes that represent the dialog
+         * @return {ReactElement} the React representation of the dialog
          */
         render: function() {
             var buttons = this.props.buttons.map(function(button) {

@@ -1,4 +1,7 @@
 define([], function() {
+    /**
+     * Wrapper around a simple Input field in a Bootstrap Form
+     */
     return React.createClass({displayName: 'Input',
         mixins: [ReactIntl.Mixin],
         propTypes: {
@@ -9,9 +12,17 @@ define([], function() {
             'value': React.PropTypes.string,
             'onChange': React.PropTypes.func
         },
+        /**
+         * Request that this input is given the focus
+         */
         focus: function() {
             this.refs.input.getDOMNode().focus();
         },
+
+        /**
+         * Render the React nodes that represent the input
+         * @return {ReactElement} the React representation of the input
+         */
         render: function() {
             var placeholder;
             if (this.props.placeholder) {

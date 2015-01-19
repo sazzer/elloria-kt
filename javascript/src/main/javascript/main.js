@@ -21,7 +21,7 @@ define(['ui/app', 'flux/flux'], function(App, flux) {
 
     React.withContext({
         messages: messages,
-        flux: flux,
+        flux: flux
     }, function() {
         ReactRouter.run(routes, ReactRouter.HistoryLocation, function(Handler) {
             React.render(React.createElement(Handler, null), document.body)
