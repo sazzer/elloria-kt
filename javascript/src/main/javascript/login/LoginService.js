@@ -11,9 +11,11 @@ define([], function() {
          */
         login: function(username, password) {
             return new Promise(function(resolve, reject) {
-                reject({
-                    err: "UNKNOWN_USER"
-                });
+                setTimeout(function() {
+                    reject({
+                        error: "INVALID_PASSWORD"
+                    });
+                }, 1000);
             });
         }
     };

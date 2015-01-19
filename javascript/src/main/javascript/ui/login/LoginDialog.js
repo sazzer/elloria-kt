@@ -3,7 +3,7 @@ define(['bootstrap/Dialog', 'bootstrap/form/Form', 'bootstrap/form/Input'], func
      * The Login DIalog
      */
     return React.createClass({displayName: 'LoginDialog',
-        mixins: [Fluxxor.FluxMixin(React)],
+        mixins: [Fluxxor.FluxMixin(React), Fluxxor.StoreWatchMixin("AuthenticationStore")],
         /**
          * Get the initial state of the login dialog
          * @returns {Object} The initial state of the login dialog
@@ -11,8 +11,26 @@ define(['bootstrap/Dialog', 'bootstrap/form/Form', 'bootstrap/form/Input'], func
         getInitialState: function() {
             return {
                 username: '',
-                password: ''
+                password: '',
+                errorMessage: undefined
             };
+        },
+
+        /**
+         * Get the current state of the dialog from Flux
+         */
+        getStateFromFlux: function() {
+            var flux = this.getFlux(),
+                authStore = flux.store("AuthenticationStore"),
+                result = {};
+
+            if (authStore.getAuthState() === authStore.AUTH_STATE_FAILED) {
+                result.errorMessage = authStore.getAuthErrors().error;
+            } else {
+                result.errorMessage = undefined;
+            }
+
+            return result;
         },
         /**
          * Request that the login dialog is displayed
@@ -57,6 +75,14 @@ define(['bootstrap/Dialog', 'bootstrap/form/Form', 'bootstrap/form/Input'], func
          * @returns {ReactElement} the React representation of the login dialog
          */
         render: function() {
+            var errorMessage = undefined;
+
+            if (this.state.errorMessage) {
+                errorMessage = React.createElement('div', {
+                    className: 'alert alert-danger',
+                    role: 'alert'
+                }, this.state.errorMessage);
+            }
             return React.createElement(Dialog, {
                 ref: 'dialog',
                 label: 'page.header.login.label',
@@ -91,7 +117,8 @@ define(['bootstrap/Dialog', 'bootstrap/form/Form', 'bootstrap/form/Input'], func
                         value: this.state.password,
                         onChange: this._onPasswordChange,
                         ref: 'password'
-                    })
+                    }),
+                    errorMessage
                 ])
             ]);
         }
