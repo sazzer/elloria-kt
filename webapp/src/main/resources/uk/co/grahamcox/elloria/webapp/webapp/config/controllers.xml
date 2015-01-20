@@ -13,4 +13,6 @@
     <bean class="uk.co.grahamcox.elloria.webapp.MessagesController">
         <constructor-arg index="0" ref="messageSource" />
     </bean>
+
+    <bean class="uk.co.grahamcox.elloria.webapp.authentication.OAuth2Controller" />
 </beans>
