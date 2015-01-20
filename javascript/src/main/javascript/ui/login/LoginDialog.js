@@ -1,4 +1,4 @@
-define(['bootstrap/Dialog', 'bootstrap/form/Form', 'bootstrap/form/Input'], function(Dialog, Form, Input) {
+define(['bootstrap/Dialog', 'bootstrap/form/Form', 'bootstrap/form/Input', 'bootstrap/Alert'], function(Dialog, Form, Input, Alert) {
     /**
      * The Login DIalog
      */
@@ -77,12 +77,13 @@ define(['bootstrap/Dialog', 'bootstrap/form/Form', 'bootstrap/form/Input'], func
         render: function() {
             var errorMessage = undefined;
 
-            if (this.state.errorMessage) {
-                errorMessage = React.createElement('div', {
-                    className: 'alert alert-danger',
-                    role: 'alert'
-                }, this.state.errorMessage);
+            if (this.state.errorMessage !== undefined) {
+                errorMessage = React.createElement(Alert, {
+                    message: 'loginDialog.authenticationError.' + this.state.errorMessage,
+                    type: 'danger'
+                });
             }
+
             return React.createElement(Dialog, {
                 ref: 'dialog',
                 label: 'page.header.login.label',
