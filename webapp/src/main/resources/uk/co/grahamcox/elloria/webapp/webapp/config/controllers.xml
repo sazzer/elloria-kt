@@ -10,7 +10,7 @@
         <constructor-arg index="1" value="classpath:/build.info" />
     </bean>
 
-    <bean class="uk.co.grahamcox.elloria.MessagesController">
+    <bean class="uk.co.grahamcox.elloria.webapp.MessagesController">
         <constructor-arg index="0" ref="messageSource" />
     </bean>
 </beans>

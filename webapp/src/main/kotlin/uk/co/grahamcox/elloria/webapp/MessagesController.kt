@@ -1,19 +1,13 @@
-package uk.co.grahamcox.elloria
+package uk.co.grahamcox.elloria.webapp
 
 import org.springframework.stereotype.Controller
-import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.context.support.AccessableResourceBundleMessageSource
-import org.springframework.web.bind.annotation.ResponseBody
-import java.time.ZonedDateTime
-import java.time.format.DateTimeFormatter
-import java.util.Locale
 import java.util.HashMap
+import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.servlet.ModelAndView
 import com.fasterxml.jackson.databind.ObjectMapper
+import java.util.Locale
 
-/**
- * Controller to get the message bundle in a form the UI can use
- */
 [Controller]
 class MessagesController(private val messages: AccessableResourceBundleMessageSource) {
     /** The object mapper to use to convert the messages structure to JSON */
