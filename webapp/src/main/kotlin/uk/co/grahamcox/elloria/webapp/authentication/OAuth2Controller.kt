@@ -34,6 +34,8 @@ open class OAuth2Exception(val code: String,
  * The request is missing a required parameter, includes an
  * invalid parameter value, includes a parameter more than
  * once, or is otherwise malformed.
+ * @param state The state from the request
+ * @param redirectUri The Redirect URI from the request
  * @param description The error description
  */
 data class InvalidRequestException(state: String? = null,
@@ -44,6 +46,8 @@ data class InvalidRequestException(state: String? = null,
 /**
  * The client is not authorized to request an authorization
  * code using this method.
+ * @param state The state from the request
+ * @param redirectUri The Redirect URI from the request
  * @param description The error description
  */
 data class UnauthorizedClientException(state: String? = null,
@@ -54,6 +58,8 @@ data class UnauthorizedClientException(state: String? = null,
 /**
  * The resource owner or authorization server denied the
  * request.
+ * @param state The state from the request
+ * @param redirectUri The Redirect URI from the request
  * @param description The error description
  */
 data class AccessDeniedException(state: String? = null,
@@ -64,6 +70,8 @@ data class AccessDeniedException(state: String? = null,
 /**
  * The authorization server does not support obtaining an
  * authorization code using this method.
+ * @param state The state from the request
+ * @param redirectUri The Redirect URI from the request
  * @param description The error description
  */
 data class UnsupportedResponseTypeException(state: String? = null,
@@ -73,6 +81,8 @@ data class UnsupportedResponseTypeException(state: String? = null,
 
 /**
  * The requested scope is invalid, unknown, or malformed.
+ * @param state The state from the request
+ * @param redirectUri The Redirect URI from the request
  * @param description The error description
  */
 data class InvalidScopeException(state: String? = null,
@@ -86,6 +96,8 @@ data class InvalidScopeException(state: String? = null,
  * (This error code is needed because a 500 Internal Server
  * Error HTTP status code cannot be returned to the client
  * via an HTTP redirect.)
+ * @param state The state from the request
+ * @param redirectUri The Redirect URI from the request
  * @param description The error description
  */
 data class ServerErrorException(state: String? = null,
@@ -99,12 +111,32 @@ data class ServerErrorException(state: String? = null,
  * of the server.  (This error code is needed because a 503
  * Service Unavailable HTTP status code cannot be returned
  * to the client via an HTTP redirect.)
+ * @param state The state from the request
+ * @param redirectUri The Redirect URI from the request
  * @param description The error description
  */
 data class TemporarilyUnavailableException(state: String? = null,
                                            redirectUri: String? = null,
                                            description: String? = null) :
         OAuth2Exception("temporarily_unavailable", state, redirectUri, description)
+
+/**
+ * Client authentication failed (e.g., unknown client, no
+ * client authentication included, or unsupported
+ * authentication method).  The authorization server MAY
+ * return an HTTP 401 (Unauthorized) status code to indicate
+ * which HTTP authentication schemes are supported.  If the
+ * client attempted to authenticate via the "Authorization"
+ * request header field, the authorization server MUST
+ * respond with an HTTP 401 (Unauthorized) status code and
+ * include the "WWW-Authenticate" response header field
+ * matching the authentication scheme used by the client.
+ * @param state The state from the request
+ * @param description The error description
+ */
+data class InvalidClientException(state: String? = null,
+                                  description: String? = null) :
+        OAuth2Exception("invalid_client", state, null, description)
 
 // Input values on the API calls
 
@@ -118,6 +150,24 @@ class OAuth2Controller(private val tokenIssuer: TokenIssuer) {
     /** The logger to use */
     private val log = LoggerFactory.getLogger(javaClass<OAuth2Controller>())
 
+    /**
+     * Handle when an Invalid Client Exception occurs
+     * This is identical to the OAuth2 Exception Handler except it explicitly sets the status code to 401 and sets the
+     * WWW-Authenticate header
+     * @param e The error to handle
+     * @return the appropriate response
+     */
+    [ExceptionHandler(javaClass<InvalidClientException>())]
+    [ResponseBody]
+    fun handleInvalidClientException(e: InvalidClientException): ResponseEntity<Map<String, String>> {
+        return handleOauth2Exception(e)
+    }
+    /**
+     * Handle when an OAuth2 error occurs
+     * @param e The error to handle
+     * @return the appropriate response - either a 302 Redirect or a JSON payload depending on if a Redirect URI was
+     * present
+     */
     [ExceptionHandler(javaClass<OAuth2Exception>())]
     [ResponseBody]
     fun handleOauth2Exception(e: OAuth2Exception): ResponseEntity<Map<String, String>> {
@@ -217,7 +267,7 @@ class OAuth2Controller(private val tokenIssuer: TokenIssuer) {
      * @return The access token that was issued
      */
     [RequestMapping(value = array("/token"),
-            method = array(RequestMethod.POST),
+            method = array(RequestMethod.POST, RequestMethod.GET),
             params = array("grant_type=password"))]
     [ResponseBody]
     fun resourceOwnerPasswordCredentialsGrant([RequestParam(value = "username", required = false)] username: String?,

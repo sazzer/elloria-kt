@@ -18,6 +18,12 @@
         <constructor-arg index="0">
             <bean class="uk.co.grahamcox.elloria.authentication.oauth2.TokenIssuer">
                 <constructor-arg index="0" ref="clock" />
+                <constructor-arg index="1">
+                    <bean class="uk.co.grahamcox.elloria.authentication.oauth2.TokenSerializer">
+                        <constructor-arg index="0" value="RWxsb3JpYQo=" />
+                        <constructor-arg index="1" value="Elloria" />
+                    </bean>
+                </constructor-arg>
             </bean>
         </constructor-arg>
     </bean>
