@@ -23,8 +23,8 @@ import org.springframework.web.util.UriComponentsBuilder
  * @param description The description
  */
 open class OAuth2Exception(val code: String,
-                           val state: State? = null,
-                           val redirectUri: RedirectUri? = null,
+                           val state: String? = null,
+                           val redirectUri: String? = null,
                            description: String? = null) : Exception(description)
 
 /**
@@ -33,8 +33,8 @@ open class OAuth2Exception(val code: String,
  * once, or is otherwise malformed.
  * @param description The error description
  */
-data class InvalidRequestException(state: State? = null,
-                                   redirectUri: RedirectUri? = null,
+data class InvalidRequestException(state: String? = null,
+                                   redirectUri: String? = null,
                                    description: String? = null) :
         OAuth2Exception("invalid_request", state, redirectUri, description)
 
@@ -43,8 +43,8 @@ data class InvalidRequestException(state: State? = null,
  * code using this method.
  * @param description The error description
  */
-data class UnauthorizedClientException(state: State? = null,
-                                       redirectUri: RedirectUri? = null,
+data class UnauthorizedClientException(state: String? = null,
+                                       redirectUri: String? = null,
                                        description: String? = null) :
         OAuth2Exception("unauthorized_client", state, redirectUri, description)
 
@@ -53,8 +53,8 @@ data class UnauthorizedClientException(state: State? = null,
  * request.
  * @param description The error description
  */
-data class AccessDeniedException(state: State? = null,
-                                 redirectUri: RedirectUri? = null,
+data class AccessDeniedException(state: String? = null,
+                                 redirectUri: String? = null,
                                  description: String? = null) :
         OAuth2Exception("access_denied", state, redirectUri, description)
 
@@ -63,8 +63,8 @@ data class AccessDeniedException(state: State? = null,
  * authorization code using this method.
  * @param description The error description
  */
-data class UnsupportedResponseTypeException(state: State? = null,
-                                            redirectUri: RedirectUri? = null,
+data class UnsupportedResponseTypeException(state: String? = null,
+                                            redirectUri: String? = null,
                                             description: String? = null) :
         OAuth2Exception("unsupported_response_type", state, redirectUri, description)
 
@@ -72,8 +72,8 @@ data class UnsupportedResponseTypeException(state: State? = null,
  * The requested scope is invalid, unknown, or malformed.
  * @param description The error description
  */
-data class InvalidScopeException(state: State? = null,
-                                 redirectUri: RedirectUri? = null,
+data class InvalidScopeException(state: String? = null,
+                                 redirectUri: String? = null,
                                  description: String? = null) :
         OAuth2Exception("invalid_scope", state, redirectUri, description)
 
@@ -85,8 +85,8 @@ data class InvalidScopeException(state: State? = null,
  * via an HTTP redirect.)
  * @param description The error description
  */
-data class ServerErrorException(state: State? = null,
-                                redirectUri: RedirectUri? = null,
+data class ServerErrorException(state: String? = null,
+                                redirectUri: String? = null,
                                 description: String? = null) :
         OAuth2Exception("server_error", state, redirectUri, description)
 
@@ -98,52 +98,13 @@ data class ServerErrorException(state: State? = null,
  * to the client via an HTTP redirect.)
  * @param description The error description
  */
-data class TemporarilyUnavailableException(state: State? = null,
-                                           redirectUri: RedirectUri? = null,
+data class TemporarilyUnavailableException(state: String? = null,
+                                           redirectUri: String? = null,
                                            description: String? = null) :
         OAuth2Exception("temporarily_unavailable", state, redirectUri, description)
 
 // Input values on the API calls
-/**
- * Representation of the Client ID to use for a request
- * @param value The Value of the Client ID
- */
-data class ClientId(val value: String)
 
-/**
- * Representation of the Redirect URI to use for a request
- * @param value The Value of the Redirect URI
- */
-data class RedirectUri(val value: String) {
-    /**
-     * Get the redirect URI with some additional parameters
-     * @param params the parameters to add to the URI
-     * @return the URI
-     */
-    fun withParams(params : Map<String, String>) : URI {
-        return params.entrySet().fold(UriComponentsBuilder.fromUriString(value)) { u, e ->
-            u.queryParam(e.key, e.value)
-        }.build().encode().toUri()
-    }
-}
-
-/**
- * Representation of the Scopes to use for a request
- * @param value The Value of the Scopes
- */
-data class Scopes(val value: String) {
-    /**
-     * Get the Scopes split out as a set of the actual scope names
-     * @return the set of scopes to request
-     */
-    fun getScopes() = value.split(" ").toSet()
-}
-
-/**
- * Representation of the State to use for a request
- * @param value The Value of the State
- */
-data class State(val value: String)
 
 /**
  * Controller to manage OAuth2 requests for authentication, as described in RFC-6749
@@ -159,7 +120,7 @@ class OAuth2Controller {
     fun handleOauth2Exception(e: OAuth2Exception): ResponseEntity<Map<String, String>> {
         val response = hashMapOf("error" to e.code)
         if (e.state != null) {
-            response.put("state", e.state.value)
+            response.put("state", e.state)
         }
         if (e.getMessage() != null) {
             response.put("error_description", e.getMessage())
@@ -169,12 +130,23 @@ class OAuth2Controller {
             ResponseEntity(response as Map<String, String>, HttpStatus.BAD_REQUEST)
         } else {
             val headers = HttpHeaders()
-            headers.setLocation(e.redirectUri.withParams(response))
+            headers.setLocation(redirectUriWithParams(e.redirectUri, response))
             ResponseEntity(headers, HttpStatus.FOUND)
         }
         return output
     }
 
+    /**
+     * Get the redirect URI with some additional parameters
+     * @param uri The redirect URI to add the parameters to
+     * @param params the parameters to add to the URI
+     * @return the URI
+     */
+    private fun redirectUriWithParams(uri: String, params : Map<String, String>) : URI {
+        return params.entrySet().fold(UriComponentsBuilder.fromUriString(uri)) { u, e ->
+            u.queryParam(e.key, e.value)
+        }.build().encode().toUri()
+    }
     /**
      * Handle the request for an Authorization Code Grant, as described in Section 4.1
      * @param clientId The Client ID for the request
@@ -187,10 +159,10 @@ class OAuth2Controller {
             method = array(RequestMethod.GET),
             params = array("response_type=code"))]
     [ResponseBody]
-    fun authorizationCodeGrant([RequestParam(value = "client_id", required = false)] clientId: ClientId?,
-                               [RequestParam(value = "redirect_uri", required = false)] redirectUri: RedirectUri?,
-                               [RequestParam(value = "scope", required = false)] scope: Scopes?,
-                               [RequestParam(value = "state", required = false)] state: State?) {
+    fun authorizationCodeGrant([RequestParam(value = "client_id", required = false)] clientId: String?,
+                               [RequestParam(value = "redirect_uri", required = false)] redirectUri: String?,
+                               [RequestParam(value = "scope", required = false)] scope: String?,
+                               [RequestParam(value = "state", required = false)] state: String?) {
         log.info("Received request for {}/{}/{}/{}", clientId, redirectUri, scope, state)
         throw UnsupportedResponseTypeException(state = state, redirectUri = redirectUri)
     }
@@ -208,8 +180,8 @@ class OAuth2Controller {
             params = array("grant_type=authorization_code"))]
     [ResponseBody]
     fun authorizationCodeToken([RequestParam(value = "code", required = false)] code: String,
-                               [RequestParam(value = "client_id", required = false)] clientId: ClientId?,
-                               [RequestParam(value = "redirect_uri", required = false)] redirectUri: RedirectUri?) {
+                               [RequestParam(value = "client_id", required = false)] clientId: String?,
+                               [RequestParam(value = "redirect_uri", required = false)] redirectUri: String?) {
         log.info("Received request for {}/{}/{}", code, clientId, redirectUri)
         throw UnsupportedResponseTypeException(redirectUri = redirectUri)
     }
@@ -226,10 +198,10 @@ class OAuth2Controller {
             method = array(RequestMethod.GET),
             params = array("response_type=token"))]
     [ResponseBody]
-    fun implicitGrant([RequestParam(value = "client_id", required = false)] clientId: ClientId?,
-                      [RequestParam(value = "redirect_uri", required = false)] redirectUri: RedirectUri?,
-                      [RequestParam(value = "scope", required = false)] scope: Scopes?,
-                      [RequestParam(value = "state", required = false)] state: State?) {
+    fun implicitGrant([RequestParam(value = "client_id", required = false)] clientId: String?,
+                      [RequestParam(value = "redirect_uri", required = false)] redirectUri: String?,
+                      [RequestParam(value = "scope", required = false)] scope: String?,
+                      [RequestParam(value = "state", required = false)] state: String?) {
         log.info("Received request for {}/{}/{}/{}", clientId, redirectUri, scope, state)
         throw UnsupportedResponseTypeException(state = state, redirectUri = redirectUri)
     }
@@ -247,7 +219,7 @@ class OAuth2Controller {
     [ResponseBody]
     fun resourceOwnerPasswordCredentialsGrant([RequestParam(value = "username", required = false)] username: String,
                                               [RequestParam(value = "password", required = false)] password: String?,
-                                              [RequestParam(value = "scope", required = false)] scope: Scopes?) {
+                                              [RequestParam(value = "scope", required = false)] scope: String?) {
         log.info("Received request for {}/{}/{}", username, password, scope)
         throw UnsupportedResponseTypeException()
     }
@@ -261,7 +233,7 @@ class OAuth2Controller {
             method = array(RequestMethod.POST),
             params = array("grant_type=client_credentials"))]
     [ResponseBody]
-    fun clientCredentialsGrant([RequestParam(value = "scope", required = false)] scope: Scopes?) {
+    fun clientCredentialsGrant([RequestParam(value = "scope", required = false)] scope: String?) {
         log.info("Received request for {}", scope)
         throw UnsupportedResponseTypeException()
     }
@@ -277,7 +249,7 @@ class OAuth2Controller {
             params = array("grant_type=refresh_token"))]
     [ResponseBody]
     fun refresh([RequestParam(value = "refresh_token", required = false)] refreshToken: String?,
-                [RequestParam(value = "scope", required = false)] scope: Scopes?) {
+                [RequestParam(value = "scope", required = false)] scope: String?) {
         log.info("Received request for {}", scope)
         throw UnsupportedResponseTypeException()
     }
