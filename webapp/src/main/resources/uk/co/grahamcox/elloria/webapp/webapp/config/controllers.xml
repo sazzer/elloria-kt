@@ -14,5 +14,11 @@
         <constructor-arg index="0" ref="messageSource" />
     </bean>
 
-    <bean class="uk.co.grahamcox.elloria.webapp.authentication.OAuth2Controller" />
+    <bean class="uk.co.grahamcox.elloria.webapp.authentication.OAuth2Controller">
+        <constructor-arg index="0">
+            <bean class="uk.co.grahamcox.elloria.authentication.oauth2.TokenIssuer">
+                <constructor-arg index="0" ref="clock" />
+            </bean>
+        </constructor-arg>
+    </bean>
 </beans>

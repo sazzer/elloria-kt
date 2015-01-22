@@ -12,6 +12,9 @@ import org.springframework.http.HttpStatus
 import org.springframework.http.HttpHeaders
 import java.net.URI
 import org.springframework.web.util.UriComponentsBuilder
+import uk.co.grahamcox.elloria.authentication.oauth2.TokenIssuer
+import uk.co.grahamcox.elloria.authentication.oauth2.Scopes
+import uk.co.grahamcox.elloria.authentication.oauth2.IssuedToken
 
 // Exceptions on the way out if it goes wrong
 /**
@@ -111,7 +114,7 @@ data class TemporarilyUnavailableException(state: String? = null,
  */
 [Controller]
 [RequestMapping(value = array("/api/oauth2"))]
-class OAuth2Controller {
+class OAuth2Controller(private val tokenIssuer: TokenIssuer) {
     /** The logger to use */
     private val log = LoggerFactory.getLogger(javaClass<OAuth2Controller>())
 
@@ -211,17 +214,33 @@ class OAuth2Controller {
      * @param username The username to authenticate
      * @param password The password to authenticate
      * @param scope The scopes for the request
-     * @throws UnsupportedOperationException we've not implemented it yet
+     * @return The access token that was issued
      */
     [RequestMapping(value = array("/token"),
             method = array(RequestMethod.POST),
             params = array("grant_type=password"))]
     [ResponseBody]
-    fun resourceOwnerPasswordCredentialsGrant([RequestParam(value = "username", required = false)] username: String,
+    fun resourceOwnerPasswordCredentialsGrant([RequestParam(value = "username", required = false)] username: String?,
                                               [RequestParam(value = "password", required = false)] password: String?,
-                                              [RequestParam(value = "scope", required = false)] scope: String?) {
+                                              [RequestParam(value = "scope", required = false)] scope: String?) :
+        Map<String, Any> {
         log.info("Received request for {}/{}/{}", username, password, scope)
-        throw UnsupportedResponseTypeException()
+        if (username == null) {
+            throw InvalidRequestException()
+        }
+        if (password == null) {
+            throw InvalidRequestException()
+        }
+
+        val scopes = if (scope == null) {
+            null
+        } else {
+            Scopes(scope)
+        }
+
+        return buildResponse(tokenIssuer.issueResourceOwnerPasswordCredentialsToken(username,
+                password,
+                scopes))
     }
 
     /**
@@ -252,5 +271,27 @@ class OAuth2Controller {
                 [RequestParam(value = "scope", required = false)] scope: String?) {
         log.info("Received request for {}", scope)
         throw UnsupportedResponseTypeException()
+    }
+
+    /**
+     * Build the correct OAuth2 API Response for the given issued access token
+     * @param accessToken the access token to build the response for
+     * @return the correct response
+     */
+    private fun buildResponse(accessToken: IssuedToken) : Map<String, Any> {
+        val response = hashMapOf(
+                "access_token" to accessToken.accessToken.value,
+                "token_type" to accessToken.type
+        )
+
+        if (accessToken.refreshToken != null) {
+            response.put("refresh_token", accessToken.refreshToken.value)
+        }
+
+        if (accessToken.scopes != null) {
+            response.put("scope", accessToken.scopes.scopes.join(" "))
+        }
+
+        return response
     }
 }
