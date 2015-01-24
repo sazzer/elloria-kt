@@ -30,8 +30,6 @@ class TokenSerializer(private val key: String, private val issuer: String) {
                 .claim("scope", token.scopes?.toString())
                 .signWith(SignatureAlgorithm.HS256, key)
                 .compact()
-        val jwt = Jwts.parser().setSigningKey(key).parse(tokenValue)
-        System.out.println(jwt)
         return AccessToken(tokenValue)
     }
 }

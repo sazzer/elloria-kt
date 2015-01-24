@@ -9,11 +9,14 @@ data class Scopes(val scopes: Set<String>) {
      * Generate a string representation of the scopes
      * @return the string
      */
-    override fun toString() : String = scopes.join(" ")
+    override fun toString() : String = scopes.sort().join(" ")
 }
 /**
  * Convert a string containing a space-separated set of scopes into a Scopes object
  * @param scopes The scopes to consume
  * @return the Scopes
  */
-fun Scopes(scopes: String) = Scopes(scopes.split("\\s").toSet())
+fun Scopes(scopes: String) =
+    Scopes(scopes.split("\\s")
+            .filter { s -> s.isNotEmpty() }
+            .toSet())
