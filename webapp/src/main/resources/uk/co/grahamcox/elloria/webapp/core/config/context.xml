@@ -7,6 +7,7 @@
 
     <context:property-placeholder />
 
+    <import resource="db/db.xml" />
     <import resource="services/services.xml" />
     <import resource="authentication/authentication.xml" />
 

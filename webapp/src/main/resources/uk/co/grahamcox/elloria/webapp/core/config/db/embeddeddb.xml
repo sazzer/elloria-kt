@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
+    profile="test,dev">
+
+    <bean id="mongodb.port" class="uk.co.grahamcox.elloria.mongodb.FreeServerPort" />
+    <bean id="mongodb.url" class="uk.co.grahamcox.elloria.mongodb.EmbeddedUrlWriter">
+        <constructor-arg name="port" ref="mongodb.port" />
+    </bean>
+    <bean id="mongodb.dbname" class="java.lang.String">
+        <constructor-arg value="elloria" />
+    </bean>
+
+    <bean class="uk.co.grahamcox.elloria.mongodb.EmbeddedMongoDb" init-method="start" destroy-method="stop">
+        <constructor-arg name="port" ref="mongodb.port" />
+        <constructor-arg name="version" value="PRODUCTION" />
+    </bean>
+</beans>
