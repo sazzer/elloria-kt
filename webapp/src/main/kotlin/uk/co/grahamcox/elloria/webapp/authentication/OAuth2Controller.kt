@@ -15,6 +15,11 @@ import org.springframework.web.util.UriComponentsBuilder
 import uk.co.grahamcox.elloria.authentication.oauth2.TokenIssuer
 import uk.co.grahamcox.elloria.authentication.oauth2.Scopes
 import uk.co.grahamcox.elloria.authentication.oauth2.IssuedToken
+import uk.co.grahamcox.elloria.user.UserService
+import uk.co.grahamcox.elloria.user.UsernameCredentials
+import uk.co.grahamcox.elloria.user.Password
+import uk.co.grahamcox.elloria.user.UnknownUserCredentialsException
+import uk.co.grahamcox.elloria.user.InvalidUserCredentialsException
 
 // Exceptions on the way out if it goes wrong
 /**
@@ -143,10 +148,12 @@ data class InvalidClientException(state: String? = null,
 
 /**
  * Controller to manage OAuth2 requests for authentication, as described in RFC-6749
+ * @param userService the mechanism for loading user records
+ * @param tokenIssuer the mechanism for issuing OAuth2 tokens
  */
 [Controller]
 [RequestMapping(value = array("/api/oauth2"))]
-class OAuth2Controller(private val tokenIssuer: TokenIssuer) {
+class OAuth2Controller(private val userService: UserService, private val tokenIssuer: TokenIssuer) {
     /** The logger to use */
     private val log = LoggerFactory.getLogger(javaClass<OAuth2Controller>())
 
@@ -180,7 +187,7 @@ class OAuth2Controller(private val tokenIssuer: TokenIssuer) {
         }
 
         val output = if (e.redirectUri == null) {
-            ResponseEntity(response as Map<String, String>, HttpStatus.BAD_REQUEST)
+            ResponseEntity(response : Map<String, String>, HttpStatus.BAD_REQUEST)
         } else {
             val headers = HttpHeaders()
             headers.setLocation(redirectUriWithParams(e.redirectUri, response))
@@ -288,9 +295,18 @@ class OAuth2Controller(private val tokenIssuer: TokenIssuer) {
             Scopes(scope)
         }
 
-        return buildResponse(tokenIssuer.issueResourceOwnerPasswordCredentialsToken(username,
-                password,
-                scopes))
+        try {
+            val user = userService.getUser(UsernameCredentials(username, Password(username, password)))
+
+            return buildResponse(tokenIssuer.issueToken(user,
+                    scopes))
+        } catch (e: Exception) {
+            when (e) {
+                is UnknownUserCredentialsException -> throw AccessDeniedException()
+                is InvalidUserCredentialsException -> throw AccessDeniedException()
+                else -> throw ServerErrorException()
+            }
+        }
     }
 
     /**

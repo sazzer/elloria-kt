@@ -7,6 +7,9 @@
 
     <context:property-placeholder />
 
+    <import resource="services/services.xml" />
+    <import resource="authentication/authentication.xml" />
+
     <beans profile="!test">
         <bean id="clock" class="java.time.Clock" factory-method="systemUTC" />
     </beans>
