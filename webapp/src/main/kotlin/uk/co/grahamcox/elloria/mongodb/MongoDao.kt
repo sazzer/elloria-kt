@@ -35,7 +35,7 @@ abstract class MongoDao<ID: Any, TYPE: Any>(private val database: MongoDatabase,
     /**
      * Parse the document that we've just loaded from the database to the return type
      * @param doc The document to parse
-     * @return the model object
+     * @return the model object. If the model object fails to parse then return null instead
      */
-    protected abstract fun parseDocument(doc: Document) : TYPE
+    protected abstract fun parseDocument(doc: Document) : TYPE?
 }
