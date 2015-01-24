@@ -1,5 +1,7 @@
 package uk.co.grahamcox.elloria.user
 
+import uk.co.grahamcox.elloria.user.dao.UserDao
+
 /**
  * Base class for all exceptions thrown by the User Service
  */
@@ -23,16 +25,24 @@ class UnknownUserCredentialsException(val credentials: Credentials) : UserExcept
 class InvalidUserCredentialsException(val credentials: Credentials) : UserException()
 
 /**
+ * Data class to contain the pair of Type and Key for Credentials
+ * @param type The type of the credentials
+ * @param key The key of the credentials
+ */
+data class CredentialsPair(val type: String, val key: String)
+
+/**
  * Service for managing access to user records
  */
-class UserService {
+class UserService(private val userDao: UserDao) {
     /**
      * Attempt to load the user with the given User ID
      * @param userId the ID of the user to load
      * @return the user
      */
     fun getUser(userId: UserId) : User {
-        throw UnknownUserIdException(userId)
+        val user = userDao.getUserById(userId)
+        return user ?: throw UnknownUserIdException(userId)
     }
 
     /**
@@ -41,6 +51,20 @@ class UserService {
      * @return the user
      */
     fun getUser(credentials: Credentials) : User {
-        throw UnknownUserCredentialsException(credentials)
+        val credentialsPair = when (credentials) {
+            is UsernameCredentials -> CredentialsPair("username", credentials.username)
+            else -> throw UnknownUserCredentialsException(credentials)
+        }
+        val user = userDao.getUserWithCredentials(credentialsPair.type, credentialsPair.key)
+        return if (user != null) {
+            if (user.credentials.contains(credentials)) {
+                user
+            } else {
+                throw InvalidUserCredentialsException(credentials)
+            }
+        } else {
+            throw UnknownUserCredentialsException(credentials)
+        }
+
     }
 }

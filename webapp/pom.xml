@@ -124,6 +124,12 @@
                 <groupId>org.eclipse.jetty</groupId>
                 <artifactId>jetty-maven-plugin</artifactId>
                 <configuration>
+                    <systemProperties>
+                        <systemProperty>
+                            <name>spring.profiles.active</name>
+                            <value>dev</value>
+                        </systemProperty>
+                    </systemProperties>
                     <webApp>
                         <contextPath>/</contextPath>
                     </webApp>

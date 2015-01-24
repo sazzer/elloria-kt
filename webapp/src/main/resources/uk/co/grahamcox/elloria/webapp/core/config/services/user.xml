@@ -2,5 +2,11 @@
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <bean id="userService" class="uk.co.grahamcox.elloria.user.UserService" />
+    <bean id="userDao" class="uk.co.grahamcox.elloria.user.dao.MongoUserDao">
+        <constructor-arg name="database" ref="mongoDatabase" />
+    </bean>
+
+    <bean id="userService" class="uk.co.grahamcox.elloria.user.UserService">
+        <constructor-arg name="userDao" ref="userDao" />
+    </bean>
 </beans>

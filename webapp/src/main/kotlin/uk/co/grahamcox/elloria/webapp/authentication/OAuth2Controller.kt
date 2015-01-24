@@ -304,7 +304,10 @@ class OAuth2Controller(private val userService: UserService, private val tokenIs
             when (e) {
                 is UnknownUserCredentialsException -> throw AccessDeniedException()
                 is InvalidUserCredentialsException -> throw AccessDeniedException()
-                else -> throw ServerErrorException()
+                else -> {
+                    log.error("Unexpected error getting user", e)
+                    throw ServerErrorException()
+                }
             }
         }
     }
