@@ -14,4 +14,20 @@
     <beans profile="!test">
         <bean id="clock" class="java.time.Clock" factory-method="systemUTC" />
     </beans>
+
+    <beans profile="dev">
+        <bean class="org.springframework.beans.factory.config.MethodInvokingBean">
+            <property name="targetObject">
+                <bean class="uk.co.grahamcox.elloria.mongodb.SeedDataProcessor">
+                    <constructor-arg name="database" ref="mongoDatabase" />
+                </bean>
+            </property>
+            <property name="targetMethod" value="seed" />
+            <property name="arguments">
+                <map>
+                    <entry key="users" value="classpath:/uk/co/grahamcox/elloria/dev/data/users.json" />
+                </map>
+            </property>
+        </bean>
+    </beans>
 </beans>

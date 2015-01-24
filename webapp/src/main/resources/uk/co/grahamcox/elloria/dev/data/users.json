@@ -1,0 +1,15 @@
+[
+    {
+        "_id": "::objectid::54c40793b7299929a697d3e0",
+        "screenName": "sazzer",
+        "realName": "Graham",
+        "email": "graham@grahamcox.co.uk",
+        "credentials": [
+            {
+                "type": "username",
+                "key": "graham",
+                "password": "::password::graham/password"
+            }
+        ]
+    }
+]
