@@ -16,7 +16,12 @@ class MongoUserDao(database: MongoDatabase) : UserDao, MongoDao<ObjectId, User>(
 
     /** @inheritDoc */
     override fun getUserWithCredentials(credentialType: String, key: String): User? {
-        return getFirstByQuery(Document())
+        val queryDocument = Document(mapOf("credentials" to
+                mapOf("\$elemMatch" to
+                        mapOf("type" to credentialType, "key" to key)
+                )
+        ))
+        return getFirstByQuery(queryDocument)
     }
 
     /** @inheritDoc */

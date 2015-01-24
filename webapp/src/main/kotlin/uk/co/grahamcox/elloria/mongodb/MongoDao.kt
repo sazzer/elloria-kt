@@ -24,7 +24,7 @@ abstract class MongoDao<ID: Any, TYPE: Any>(private val database: MongoDatabase,
      * @return the translated model object, or null if there wasn't one
      */
     protected fun getFirstByQuery(query: Document) : TYPE? {
-        val doc = collection.find().first()
+        val doc = collection.find(query).first()
         val result = if (doc != null) {
             parseDocument(doc)
         } else {
