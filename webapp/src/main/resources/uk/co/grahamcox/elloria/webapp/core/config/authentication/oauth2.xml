@@ -2,7 +2,7 @@
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <bean id="oauth2TokenSerializer" class="uk.co.grahamcox.elloria.authentication.oauth2.TokenSerializer">
+    <bean id="oauth2TokenSerializer" class="uk.co.grahamcox.elloria.authentication.oauth2.JwtTokenSerializer">
         <constructor-arg index="0" value="RWxsb3JpYQo=" />
         <constructor-arg index="1" value="Elloria" />
     </bean>

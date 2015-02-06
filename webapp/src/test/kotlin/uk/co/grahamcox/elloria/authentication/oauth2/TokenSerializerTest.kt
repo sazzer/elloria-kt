@@ -10,13 +10,13 @@ import java.util.Date
 /**
  * Unit tests for the Token Serializer
  */
-class TokenSerializerTest {
+class JwtTokenSerializerTest {
     /**
      * Test serializing a token
      */
     [Test]
     fun testSerializeToken() {
-        val tokenSerializer = TokenSerializer(key = "abcdef", issuer = "Test")
+        val tokenSerializer = JwtTokenSerializer(key = "abcdef", issuer = "Test")
         val token = Token(userId = "userId",
                 issued = ZonedDateTime.of(2015, 1, 23, 23, 53, 0, 0, ZoneId.of("UTC")),
                 expires = ZonedDateTime.of(2015, 4, 23, 23, 53, 0, 0, ZoneId.of("UTC")),
