@@ -10,6 +10,16 @@ define([], function() {
          * @returns {Promise} A Promise of the result of logging in
          */
         login: function(username, password) {
+            superagent.post("/api/oauth2/token")
+                .type("form")
+                .send({
+                    "grant_type": "urn:uk.co.grahamcox.elloria:webapp-login",
+                    "username": username,
+                    "password": password
+                })
+                .set("Accept", "application/json")
+                .end(function(err, res) {
+                });
             return new Promise(function(resolve, reject) {
                 setTimeout(function() {
                     reject({

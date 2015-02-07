@@ -13,6 +13,7 @@
         <script type="text/javascript" src="/webjars/jquery/1.11.1/jquery.js"></script>
         <script type="text/javascript" src="/webjars/bootstrap/3.3.1/js/bootstrap.js"></script>
 
+        <script type="text/javascript" src="/javascript/external/superagent.js"></script>
         <script type="text/javascript" src="/javascript/external/bluebird.js"></script>
         <script type="text/javascript" src="/webjars/react/0.12.2/react.js"></script>
         <script type="text/javascript" src="/webjars/react-router/0.11.6/react-router.js"></script>
