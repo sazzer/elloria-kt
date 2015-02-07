@@ -7,8 +7,8 @@
         "credentials": [
             {
                 "type": "username",
-                "key": "graham",
-                "password": "::password::graham/password"
+                "key": "graham@grahamcox.co.uk",
+                "password": "::password::graham@grahamcox.co.uk/password"
             }
         ]
     }
