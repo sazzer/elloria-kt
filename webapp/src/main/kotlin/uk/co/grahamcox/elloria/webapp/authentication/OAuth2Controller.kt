@@ -73,6 +73,17 @@ data class AccessDeniedException(state: String? = null,
         OAuth2Exception("access_denied", state, redirectUri, description)
 
 /**
+ * The user was unknown, in an Elloria Webapp grant
+ * @param state The state from the request
+ * @param redirectUri The Redirect URI from the request
+ * @param description The error description
+ */
+data class UnknownUserException(state: String? = null,
+                                redirectUri: String? = null,
+                                description: String? = null) :
+        OAuth2Exception("unknown_user", state, redirectUri, description)
+
+/**
  * The authorization server does not support obtaining an
  * authorization code using this method.
  * @param state The state from the request
@@ -340,6 +351,53 @@ class OAuth2Controller(private val userService: UserService, private val tokenIs
                 [RequestParam(value = "scope", required = false)] scope: String?) {
         log.info("Received request for {}", scope)
         throw UnsupportedResponseTypeException()
+    }
+
+    /**
+     * Handle the request for an Elloria Webapp Login. This is virtually identical to a Resource Owner Password Credentials grant, 
+     * except that it will distinguish between Unknown User and Invalid Password in the response.
+     * @param username The username to authenticate
+     * @param password The password to authenticate
+     * @param scope The scopes for the request
+     * @return The access token that was issued
+     */
+    [RequestMapping(value = array("/token"),
+            method = array(RequestMethod.POST, RequestMethod.GET),
+            params = array("grant_type=urn:uk.co.grahamcox.elloria:webapp-login"))]
+    [ResponseBody]
+    fun elloriaWebappGrant([RequestParam(value = "username", required = false)] username: String?,
+                           [RequestParam(value = "password", required = false)] password: String?,
+                           [RequestParam(value = "scope", required = false)] scope: String?) :
+        Map<String, Any> {
+        log.info("Received request for {}/{}/{}", username, password, scope)
+        if (username == null) {
+            throw InvalidRequestException()
+        }
+        if (password == null) {
+            throw InvalidRequestException()
+        }
+
+        val scopes = if (scope == null) {
+            null
+        } else {
+            Scopes(scope)
+        }
+
+        try {
+            val user = userService.getUser(UsernameCredentials(username, Password(username, password)))
+
+            return buildResponse(tokenIssuer.issueToken(user,
+                    scopes))
+        } catch (e: Exception) {
+            when (e) {
+                is UnknownUserCredentialsException -> throw UnknownUserException()
+                is InvalidUserCredentialsException -> throw AccessDeniedException()
+                else -> {
+                    log.error("Unexpected error getting user", e)
+                    throw ServerErrorException()
+                }
+            }
+        }
     }
 
     /**
