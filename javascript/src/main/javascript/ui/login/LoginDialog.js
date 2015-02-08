@@ -22,12 +22,16 @@ define(['bootstrap/Dialog', 'bootstrap/form/Form', 'bootstrap/form/Input', 'boot
         getStateFromFlux: function() {
             var flux = this.getFlux(),
                 authStore = flux.store("AuthenticationStore"),
-                result = {};
+                result = {
+                    authState: authStore.getAuthState(),
+                    errorMessage: undefined,
+                    registerUser: false
+                };
 
             if (authStore.getAuthState() === authStore.AUTH_STATE_FAILED) {
                 result.errorMessage = authStore.getAuthErrors().error;
-            } else {
-                result.errorMessage = undefined;
+            } else if (authStore.getAuthState() == authStore.AUTH_STATE_REGISTER_STARTED) {
+                result.registerUser = true;
             }
 
             return result;
@@ -36,7 +40,11 @@ define(['bootstrap/Dialog', 'bootstrap/form/Form', 'bootstrap/form/Input', 'boot
          * Request that the login dialog is displayed
          */
         show: function() {
-            this.setState({username: '', password: ''});
+            this.setState({
+                username: '',
+                password: '',
+                authState: this.getFlux().store("AuthenticationStore").AUTH_STATE_NOT_AUTHENTICATED
+            });
             this.refs.dialog.show();
         },
         /**
@@ -47,20 +55,14 @@ define(['bootstrap/Dialog', 'bootstrap/form/Form', 'bootstrap/form/Input', 'boot
             this.refs.username.focus();
         },
         /**
-         * Callback to store the username when it changes
+         * Callback to store the field value when it changes
          * @param e {Event} The event to handle
          * @private
          */
-        _onUsernameChange: function(e) {
-            this.setState({username: e.target.value});
-        },
-        /**
-         * Callback to store the password when it changes
-         * @param e {Event} The event to handle
-         * @private
-         */
-        _onPasswordChange: function(e) {
-            this.setState({password: e.target.value});
+        _onFieldChange: function(e) {
+            var stateChange = {};
+            stateChange[e.target.name] = e.target.value;
+            this.setState(stateChange);
         },
         /**
          * Callback to submit the login form
@@ -84,6 +86,58 @@ define(['bootstrap/Dialog', 'bootstrap/form/Form', 'bootstrap/form/Input', 'boot
                 });
             }
 
+            var form = [
+                React.createElement(Input, {
+                    name: 'username',
+                    label: 'loginDialog.form.username.label',
+                    placeholder: 'loginDialog.form.username.placeholder',
+                    type: 'email',
+                    value: this.state.username,
+                    onChange: this._onFieldChange,
+                    ref: 'username'
+                }),
+                React.createElement(Input, {
+                    name: 'password',
+                    label: 'loginDialog.form.password.label',
+                    placeholder: 'loginDialog.form.password.placeholder',
+                    type: 'password',
+                    value: this.state.password,
+                    onChange: this._onFieldChange,
+                    ref: 'password'
+                })
+            ];
+
+            if (this.state.registerUser) {
+                form.push(React.createElement(Input, {
+                    name: 'password2',
+                    label: 'loginDialog.form.password2.label',
+                    placeholder: 'loginDialog.form.password2.placeholder',
+                    type: 'password',
+                    value: this.state.password2,
+                    onChange: this._onFieldChange,
+                    ref: 'password2'
+                }));
+                form.push(React.createElement(Input, {
+                    name: 'realName',
+                    label: 'loginDialog.form.realName.label',
+                    placeholder: 'loginDialog.form.realName.placeholder',
+                    type: 'text',
+                    value: this.state.realName,
+                    onChange: this._onFieldChange,
+                    ref: 'realName'
+                }));
+                form.push(React.createElement(Input, {
+                    name: 'screenName',
+                    label: 'loginDialog.form.screenName.label',
+                    placeholder: 'loginDialog.form.screenName.placeholder',
+                    type: 'text',
+                    value: this.state.screenName,
+                    onChange: this._onFieldChange,
+                    ref: 'screenName'
+                }));
+            }
+
+            form.push(errorMessage);
             return React.createElement(Dialog, {
                 ref: 'dialog',
                 label: 'page.header.login.label',
@@ -100,27 +154,7 @@ define(['bootstrap/Dialog', 'bootstrap/form/Form', 'bootstrap/form/Input', 'boot
                     }
                 ]
             }, [
-                React.createElement(Form, {}, [
-                    React.createElement(Input, {
-                        name: 'username',
-                        label: 'loginDialog.form.username.label',
-                        placeholder: 'loginDialog.form.username.placeholder',
-                        type: 'email',
-                        value: this.state.username,
-                        onChange: this._onUsernameChange,
-                        ref: 'username'
-                    }),
-                    React.createElement(Input, {
-                        name: 'password',
-                        label: 'loginDialog.form.password.label',
-                        placeholder: 'loginDialog.form.password.placeholder',
-                        type: 'password',
-                        value: this.state.password,
-                        onChange: this._onPasswordChange,
-                        ref: 'password'
-                    }),
-                    errorMessage
-                ])
+                React.createElement(Form, {}, form)
             ]);
         }
     });
