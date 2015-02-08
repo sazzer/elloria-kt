@@ -73,7 +73,7 @@ define(['login/LoginConstants'], function(LoginConstants) {
          * @private
          */
         _loginFailure: function(payload) {
-            if (payload.error === "UNKNOWN_USER") {
+            if (payload.error === "unknown_user") {
                 this._authState = this.AUTH_STATE_REGISTER_STARTED;
                 this._authErrors = undefined;
                 this._registerErrors = undefined;
