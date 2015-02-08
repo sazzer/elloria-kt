@@ -10,8 +10,6 @@ define(['bootstrap/Dialog', 'bootstrap/form/Form', 'bootstrap/form/Input', 'boot
          */
         getInitialState: function() {
             return {
-                username: '',
-                password: '',
                 errorMessage: undefined
             };
         },
@@ -41,8 +39,6 @@ define(['bootstrap/Dialog', 'bootstrap/form/Form', 'bootstrap/form/Input', 'boot
          */
         show: function() {
             this.setState({
-                username: '',
-                password: '',
                 authState: this.getFlux().store("AuthenticationStore").AUTH_STATE_NOT_AUTHENTICATED
             });
             this.refs.dialog.show();
@@ -55,21 +51,15 @@ define(['bootstrap/Dialog', 'bootstrap/form/Form', 'bootstrap/form/Input', 'boot
             this.refs.username.focus();
         },
         /**
-         * Callback to store the field value when it changes
-         * @param e {Event} The event to handle
-         * @private
-         */
-        _onFieldChange: function(e) {
-            var stateChange = {};
-            stateChange[e.target.name] = e.target.value;
-            this.setState(stateChange);
-        },
-        /**
          * Callback to submit the login form
          * @private
          */
         _onSubmit: function() {
-            this.getFlux().actions.Login.login(this.state.username, this.state.password);
+            this.getFlux().actions.Login.login(this.refs.username.value(), this.refs.password.value());
+        },
+
+        componentDidUpdate: function() {
+            this.refs.username.focus();
         },
 
         /**
@@ -92,8 +82,6 @@ define(['bootstrap/Dialog', 'bootstrap/form/Form', 'bootstrap/form/Input', 'boot
                     label: 'loginDialog.form.username.label',
                     placeholder: 'loginDialog.form.username.placeholder',
                     type: 'email',
-                    value: this.state.username,
-                    onChange: this._onFieldChange,
                     ref: 'username'
                 }),
                 React.createElement(Input, {
@@ -101,8 +89,6 @@ define(['bootstrap/Dialog', 'bootstrap/form/Form', 'bootstrap/form/Input', 'boot
                     label: 'loginDialog.form.password.label',
                     placeholder: 'loginDialog.form.password.placeholder',
                     type: 'password',
-                    value: this.state.password,
-                    onChange: this._onFieldChange,
                     ref: 'password'
                 })
             ];
@@ -113,8 +99,6 @@ define(['bootstrap/Dialog', 'bootstrap/form/Form', 'bootstrap/form/Input', 'boot
                     label: 'loginDialog.form.password2.label',
                     placeholder: 'loginDialog.form.password2.placeholder',
                     type: 'password',
-                    value: this.state.password2,
-                    onChange: this._onFieldChange,
                     ref: 'password2'
                 }));
                 form.push(React.createElement(Input, {
@@ -122,8 +106,6 @@ define(['bootstrap/Dialog', 'bootstrap/form/Form', 'bootstrap/form/Input', 'boot
                     label: 'loginDialog.form.realName.label',
                     placeholder: 'loginDialog.form.realName.placeholder',
                     type: 'text',
-                    value: this.state.realName,
-                    onChange: this._onFieldChange,
                     ref: 'realName'
                 }));
                 form.push(React.createElement(Input, {
@@ -131,8 +113,6 @@ define(['bootstrap/Dialog', 'bootstrap/form/Form', 'bootstrap/form/Input', 'boot
                     label: 'loginDialog.form.screenName.label',
                     placeholder: 'loginDialog.form.screenName.placeholder',
                     type: 'text',
-                    value: this.state.screenName,
-                    onChange: this._onFieldChange,
                     ref: 'screenName'
                 }));
             }

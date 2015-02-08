@@ -18,7 +18,13 @@ define([], function() {
         focus: function() {
             this.refs.input.getDOMNode().focus();
         },
-
+        /**
+         * Get the value of the input
+         * @return {String} the value of the input
+         */
+        value: function() {
+            return this.refs.input.getDOMNode().value;
+        },
         /**
          * Render the React nodes that represent the input
          * @return {ReactElement} the React representation of the input
