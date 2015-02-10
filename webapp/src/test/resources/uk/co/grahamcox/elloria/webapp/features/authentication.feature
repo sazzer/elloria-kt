@@ -1,4 +1,7 @@
 Feature: Authentication
+  Background:
+    Given I have opened the application
+
   @wip
   Scenario: Attempt to log in with wrong password
 
