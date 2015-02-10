@@ -13,6 +13,6 @@ class SeedDataSteps {
      */
     [Given("^a user exists with email \"(.*)\" and password \"(.*)\"$")]
     fun ingestUser(email: String, password: String) {
-
+        print("Hello")
     }
 }
