@@ -181,7 +181,7 @@
                             <systemProperties>
                                 <systemProperty>
                                     <name>spring.profiles.active</name>
-                                    <value>test</value>
+                                    <value>integrationtest</value>
                                 </systemProperty>
                             </systemProperties>
                             <httpConnector>

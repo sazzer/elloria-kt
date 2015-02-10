@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
-    profile="test,dev">
+    profile="integrationtest,unittest,dev">
 
     <bean id="mongodb.port" class="uk.co.grahamcox.elloria.mongodb.FreeServerPort" />
     <bean id="mongodb.url" class="uk.co.grahamcox.elloria.mongodb.EmbeddedUrlWriter">

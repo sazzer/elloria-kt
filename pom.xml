@@ -38,6 +38,7 @@
     <properties>
         <!-- Other stuff -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <!-- Dependency Versions -->
         <version.cucumber>1.2.2</version.cucumber>
         <version.jackson>2.5.0</version.jackson>

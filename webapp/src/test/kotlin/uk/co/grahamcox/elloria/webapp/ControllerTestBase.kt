@@ -18,7 +18,7 @@ import org.springframework.http.HttpHeaders
  * Base class for Webapp Integration tests
  */
 [WebAppConfiguration]
-[ActiveProfiles(array("test"))]
+[ActiveProfiles(array("unittest"))]
 [RunWith(javaClass<SpringJUnit4ClassRunner>())]
 [ContextConfiguration(classes = array(javaClass<TestContext>()))]
 open class ControllerTestBase {
