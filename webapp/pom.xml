@@ -129,6 +129,11 @@
                         <goals>
                             <goal>integration-test</goal>
                         </goals>
+                        <configuration>
+                            <systemPropertyVariables>
+                                <url.test>http://localhost:${port.jetty.http}</url.test>
+                            </systemPropertyVariables>
+                        </configuration>
                     </execution>
                     <execution>
                         <id>verify</id>
