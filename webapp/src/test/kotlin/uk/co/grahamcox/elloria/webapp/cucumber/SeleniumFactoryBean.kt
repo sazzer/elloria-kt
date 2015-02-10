@@ -7,17 +7,13 @@ import org.openqa.selenium.firefox.FirefoxDriver
 /**
  * Factory bean to create the WebDriver to use
  */
-class SeleniumFactoryBean : AbstractFactoryBean<WebDriver>() {
-    /** {@inheritDoc} */
-    override fun getObjectType(): Class<out Any> {
-        return javaClass<WebDriver>()
-    }
+class SeleniumFactoryBean {
 
     /**
      * Create an instance of the appropriate WebDriver to use for the tests
      * @return the WebDriver to use
      */
-    override fun createInstance(): WebDriver {
+    fun createInstance(): WebDriver {
         return FirefoxDriver()
     }
 }

@@ -6,7 +6,7 @@ import cucumber.api.java.en.Then
 /**
  * Cucumber steps to handle authenticating in the UI
  */
-class AuthenticationSteps : SpringStepBase() {
+class AuthenticationSteps {
     /**
      * Attempt to log in with the given email and password
      * @param email The email address to log in with

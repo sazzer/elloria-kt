@@ -5,7 +5,7 @@ import cucumber.api.java.en.Given
 /**
  * Cucumber steps to support seed data
  */
-class SeedDataSteps : SpringStepBase() {
+class SeedDataSteps {
     /**
      * Ingest a user with the given username and password
      * @param email The email address of the user to ingest
