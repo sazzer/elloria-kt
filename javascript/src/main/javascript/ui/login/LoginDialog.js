@@ -122,6 +122,7 @@ define(['bootstrap/Dialog', 'bootstrap/form/Form', 'bootstrap/form/Input', 'boot
                 ref: 'dialog',
                 label: 'page.header.login.label',
                 onShow: this._setFocusOnShow,
+                className: 'test-login-dialog',
                 buttons: [
                     {
                         label: 'loginDialog.buttons.close',

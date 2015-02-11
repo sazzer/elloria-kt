@@ -8,7 +8,8 @@ define([], function() {
             'label': React.PropTypes.string.isRequired,
             'to': React.PropTypes.string,
             'params': React.PropTypes.object,
-            'onClick': React.PropTypes.func
+            'onClick': React.PropTypes.func,
+            'className': React.PropTypes.string
         },
 
         /**
@@ -21,12 +22,14 @@ define([], function() {
             if (this.props.onClick) {
                 link = React.createElement('a', {
                     href: '#',
-                    onClick: this.props.onClick
+                    onClick: this.props.onClick,
+                    className: this.props.className
                 }, messageElement);
             } else {
                 link = React.createElement(ReactRouter.Link, {
                     to: this.props.to,
-                    params: this.props.params
+                    params: this.props.params,
+                    className: this.props.className
                 }, messageElement);
             }
 

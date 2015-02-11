@@ -7,7 +7,8 @@ define([], function() {
         propTypes: {
             'label': React.PropTypes.string.isRequired,
             'buttons': React.PropTypes.array.isRequired,
-            'onShow': React.PropTypes.func
+            'onShow': React.PropTypes.func,
+            'className': React.PropTypes.string
         },
 
         /**
@@ -47,7 +48,7 @@ define([], function() {
                 settings.className = settings.className.join(' ');
                 return React.createElement('button', settings, label);
             }.bind(this));
-            return React.createElement('div', {className: 'modal fade', ref: 'modalBase'}, [
+            return React.createElement('div', {className: 'modal fade ' + this.props.className, ref: 'modalBase'}, [
                 React.createElement('div', {className: 'modal-dialog'}, [
                     React.createElement('div', {className: 'modal-content'}, [
                         React.createElement('div', {className: 'modal-header'}, [

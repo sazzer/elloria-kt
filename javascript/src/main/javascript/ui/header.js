@@ -57,6 +57,7 @@ define(['ui/NavBar', 'bootstrap/nav/NavLink', 'bootstrap/nav/NavDropdown', 'ui/l
                     to: 'state',
                     params: {abbr: 'CA'},
                     onClick: this._onLoginClick,
+                    className: 'test-login-link',
                     label: 'page.header.login.label'
                 }));
             }

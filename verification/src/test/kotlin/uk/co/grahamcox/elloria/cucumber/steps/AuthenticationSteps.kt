@@ -2,11 +2,12 @@ package uk.co.grahamcox.elloria.cucumber.steps
 
 import cucumber.api.java.en.When
 import cucumber.api.java.en.Then
+import uk.co.grahamcox.elloria.cucumber.pages.ElloriaPageModel
 
 /**
  * Cucumber steps to handle authenticating in the UI
  */
-class AuthenticationSteps {
+class AuthenticationSteps(private val elloria : ElloriaPageModel) {
     /**
      * Attempt to log in with the given email and password
      * @param email The email address to log in with
@@ -14,7 +15,9 @@ class AuthenticationSteps {
      */
     [When("^I try to log in as email \"(.*)\" and password \"(.*)\"$")]
     fun login(email: String, password: String) {
-
+        val loginDialog = elloria.loginDialog()
+        loginDialog.setEmail(email)
+        loginDialog.setPassword(password)
     }
 
     /**
