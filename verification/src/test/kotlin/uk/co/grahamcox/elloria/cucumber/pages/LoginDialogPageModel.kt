@@ -13,9 +13,10 @@ class LoginDialogPageModel(private val dialogElement: WebElement) {
      * @param email The email to log in with
      */
     fun setEmail(email: String) {
-        val usernameElement = dialogElement.findElement(By.name("username"))
-        usernameElement.click()
-        usernameElement.sendKeys(email)
+        dialogElement.findElement(By.name("username")).whenDisplayed { input ->
+            input.click()
+            input.sendKeys(email)
+        }
     }
 
     /**
@@ -23,8 +24,18 @@ class LoginDialogPageModel(private val dialogElement: WebElement) {
      * @param password The password to log in with
      */
     fun setPassword(password: String) {
-        val passwordElement = dialogElement.findElement(By.name("password"))
-        passwordElement.click()
-        passwordElement.sendKeys(password)
+        dialogElement.findElement(By.name("password")).whenDisplayed { input ->
+            input.click()
+            input.sendKeys(password)
+        }
+    }
+
+    /**
+     * Submit the login form
+     */
+    fun submit() {
+        dialogElement.findElement(By.className("btn-primary")).whenDisplayed { button ->
+            button.click()
+        }
     }
 }

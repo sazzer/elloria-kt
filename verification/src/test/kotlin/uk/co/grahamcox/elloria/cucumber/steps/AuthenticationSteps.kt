@@ -18,6 +18,7 @@ class AuthenticationSteps(private val elloria : ElloriaPageModel) {
         val loginDialog = elloria.loginDialog()
         loginDialog.setEmail(email)
         loginDialog.setPassword(password)
+        loginDialog.submit()
     }
 
     /**

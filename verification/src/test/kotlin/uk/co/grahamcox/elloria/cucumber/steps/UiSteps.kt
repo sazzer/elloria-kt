@@ -28,7 +28,6 @@ class UiSteps(private val webDriver: WebDriverProvider) {
      */
     [After]
     fun closeWebDriver() {
-        Thread.sleep(50000)
         webDriver.destroy()
     }
 
