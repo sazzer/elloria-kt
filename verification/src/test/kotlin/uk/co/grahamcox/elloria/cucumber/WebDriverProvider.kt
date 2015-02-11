@@ -1,4 +1,4 @@
-package uk.co.grahamcox.elloria.webapp.cucumber
+package uk.co.grahamcox.elloria.cucumber
 
 import org.openqa.selenium.firefox.FirefoxDriver
 import org.openqa.selenium.WebDriver

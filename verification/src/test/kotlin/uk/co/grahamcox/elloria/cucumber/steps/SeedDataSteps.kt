@@ -1,4 +1,4 @@
-package uk.co.grahamcox.elloria.webapp.cucumber.steps
+package uk.co.grahamcox.elloria.cucumber.steps
 
 import cucumber.api.java.en.Given
 

@@ -1,4 +1,4 @@
-package uk.co.grahamcox.elloria.webapp.cucumber
+package uk.co.grahamcox.elloria.cucumber
 
 import cucumber.api.CucumberOptions
 import cucumber.api.junit.Cucumber
@@ -10,7 +10,7 @@ import org.junit.runner.RunWith
 [RunWith(value = javaClass<Cucumber>())]
 [CucumberOptions(
         format = array("pretty"),
-        features = array("classpath:uk/co/grahamcox/elloria/webapp/features"),
+        features = array("classpath:uk/co/grahamcox/elloria/features"),
         tags = array("~@wip")
 )]
 class CucumberIT
@@ -20,7 +20,7 @@ class CucumberIT
 [RunWith(value = javaClass<Cucumber>())]
 [CucumberOptions(
         format = array("pretty"),
-        features = array("classpath:uk/co/grahamcox/elloria/webapp/features"),
+        features = array("classpath:uk/co/grahamcox/elloria/features"),
         tags = array("@wip")
 )]
 class CucumberWipIT

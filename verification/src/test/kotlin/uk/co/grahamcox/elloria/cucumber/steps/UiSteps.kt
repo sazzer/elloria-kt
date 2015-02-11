@@ -1,8 +1,7 @@
-package uk.co.grahamcox.elloria.webapp.cucumber.steps
+package uk.co.grahamcox.elloria.cucumber.steps
 
 import cucumber.api.java.en.Given
-import org.springframework.beans.factory.annotation.Autowired
-import uk.co.grahamcox.elloria.webapp.cucumber.WebDriverProvider
+import uk.co.grahamcox.elloria.cucumber.WebDriverProvider
 import cucumber.api.java.After
 import org.slf4j.LoggerFactory
 
