@@ -16,6 +16,6 @@ class ElloriaPageModel(webDriverProvider: WebDriverProvider) {
      */
     fun loginDialog() : LoginDialogPageModel {
         webDriver.findElement(By.className("test-login-link")).click()
-        return LoginDialogPageModel(eventuallyFindElement(webDriver, By.className("test-login-dialog")))
+        return LoginDialogPageModel(webDriver.eventuallyFindElement(By.className("test-login-dialog")))
     }
 }
