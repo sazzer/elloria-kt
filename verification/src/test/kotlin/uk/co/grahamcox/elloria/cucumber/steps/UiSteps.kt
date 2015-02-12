@@ -13,14 +13,14 @@ class UiSteps(private val webDriver: WebDriverProvider) {
     private val log = LoggerFactory.getLogger(javaClass<UiSteps>())
 
     /** The HTTP URL to connect to for the tests */
-    private val testUrl = System.getProperty("url.test")
+    private val testUrl = System.getProperty("test.url")
     /**
      * Open up the application in the browser
      */
     [Given("^I have opened the application$")]
     fun openUi() {
         log.info("Connecting to Elloria Application on ${testUrl}")
-        webDriver.webDriver.get(testUrl)
+        webDriver.openUrl(testUrl)
     }
 
     /**
