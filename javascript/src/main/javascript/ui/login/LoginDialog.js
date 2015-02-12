@@ -72,7 +72,8 @@ define(['bootstrap/Dialog', 'bootstrap/form/Form', 'bootstrap/form/Input', 'boot
             if (this.state.errorMessage !== undefined) {
                 errorMessage = React.createElement(Alert, {
                     message: 'loginDialog.authenticationError.' + this.state.errorMessage,
-                    type: 'danger'
+                    type: 'danger',
+                    className: 'test-alert-authenticationError'
                 });
             }
 

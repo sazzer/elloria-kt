@@ -38,4 +38,11 @@ class LoginDialogPageModel(private val dialogElement: WebElement) {
             button.click()
         }
     }
+
+    /**
+     * Get the Authentication Error message, if there is one
+     */
+    fun getAuthenticationError() : String? {
+        return dialogElement.eventuallyFindElement(By.className("test-alert-authenticationError")).getText()
+    }
 }

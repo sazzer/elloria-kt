@@ -6,7 +6,8 @@ define([], function() {
         mixins: [ReactIntl.Mixin],
         propTypes: {
             'message': React.PropTypes.string.isRequired,
-            'type': React.PropTypes.string
+            'type': React.PropTypes.string,
+            'className': React.PropTypes.string
         },
 
         /**
@@ -24,8 +25,16 @@ define([], function() {
          * @return {ReactElement} the React representation of the alert
          */
         render: function() {
+            var classNames = [
+                'alert',
+                'alert-' + this.props.type
+            ];
+            if (this.props.className) {
+                classNames.push(this.props.className);
+            }
+
             return React.createElement('div', {
-                className: 'alert alert-' + this.props.type,
+                className: classNames.join(' '),
                 role: 'alert'
             }, this.getIntlMessage(this.props.message));
         }

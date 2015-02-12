@@ -3,6 +3,7 @@ package uk.co.grahamcox.elloria.cucumber.steps
 import cucumber.api.java.en.When
 import cucumber.api.java.en.Then
 import uk.co.grahamcox.elloria.cucumber.pages.ElloriaPageModel
+import org.junit.Assert
 
 /**
  * Cucumber steps to handle authenticating in the UI
@@ -27,6 +28,7 @@ class AuthenticationSteps(private val elloria : ElloriaPageModel) {
      */
     [Then("^I get the log in error \"(.*)\"$")]
     fun checkLoginError(error: String) {
-
+        val loginDialog = elloria.loginDialog()
+        Assert.assertEquals(error, loginDialog.getAuthenticationError())
     }
 }
