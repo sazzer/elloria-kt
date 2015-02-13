@@ -465,6 +465,17 @@
     </reporting>
     <profiles>
         <profile>
+            <id>phantomjs-linux</id>
+            <activation>
+                <os>
+                    <name>Linux</name>
+                </os>
+            </activation>
+            <properties>
+                <phantomjs.baseurl>https://github.com/sazzer/elloria-kt/raw/phantomjs-bin/2.0.0</phantomjs.baseurl>
+            </properties>
+        </profile>
+        <profile>
             <id>phantomjs-macosx</id>
             <activation>
                 <os>
