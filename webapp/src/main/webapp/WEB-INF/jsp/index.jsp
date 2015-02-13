@@ -10,6 +10,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/3.3.1/css/bootstrap.css" />
+
+        <script type="text/javascript" src="/javascript/external/polyfill/intl.js"></script>
+
         <script type="text/javascript" src="/webjars/jquery/1.11.1/jquery.js"></script>
         <script type="text/javascript" src="/webjars/bootstrap/3.3.1/js/bootstrap.js"></script>
 
