@@ -4,6 +4,7 @@ import org.openqa.selenium.firefox.FirefoxDriver
 import org.openqa.selenium.WebDriver
 import javax.annotation.PreDestroy
 import org.slf4j.LoggerFactory
+import org.openqa.selenium.Dimension
 
 private val browserName = System.getProperty("test.browser")
 
@@ -28,6 +29,7 @@ class WebDriverProvider {
      * @param url The URL to open
      */
     fun openUrl(url: String) {
+        webDriver.manage().window().setSize(Dimension(1280, 1024))
         webDriver.get(url)
     }
     /**

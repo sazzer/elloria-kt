@@ -37,6 +37,7 @@
         <url>https://travis-ci.org/sazzer/elloria</url>
     </ciManagement>
     <properties>
+        <phantomjs.baseurl>https://bitbucket.org/ariya/phantomjs/downloads</phantomjs.baseurl>
         <!-- Other stuff -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -75,8 +76,8 @@
                 <version>1.2.0</version>
                 <exclusions>
                     <exclusion>
-                        <groupId>org.seleniumhq.selenium</groupId>
                         <artifactId>selenium-remote-driver</artifactId>
+                        <groupId>org.seleniumhq.selenium</groupId>
                     </exclusion>
                 </exclusions>
             </dependency>
@@ -289,7 +290,9 @@
                     <artifactId>phantomjs-maven-plugin</artifactId>
                     <version>0.4</version>
                     <configuration>
-                        <version>1.9.8</version>
+                        <baseUrl>${phantomjs.baseurl}</baseUrl>
+                        <source>URL</source>
+                        <version>2.0.0</version>
                     </configuration>
                 </plugin>
                 <plugin>
@@ -460,4 +463,17 @@
             </plugin>
         </plugins>
     </reporting>
+    <profiles>
+        <profile>
+            <id>phantomjs-macosx</id>
+            <activation>
+                <os>
+                    <name>Mac OS X</name>
+                </os>
+            </activation>
+            <properties>
+                <phantomjs.baseurl>https://github.com/sazzer/elloria-kt/raw/phantomjs-bin/2.0.0</phantomjs.baseurl>
+            </properties>
+        </profile>
+    </profiles>
 </project>
