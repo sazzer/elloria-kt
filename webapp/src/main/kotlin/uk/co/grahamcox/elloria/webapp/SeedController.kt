@@ -8,13 +8,14 @@ import uk.co.grahamcox.elloria.api.seed.Seed
 import org.slf4j.LoggerFactory
 import org.springframework.http.ResponseEntity
 import org.springframework.http.HttpStatus
+import uk.co.grahamcox.elloria.seed.SeedDataLoader
 
 /**
  * Class to support ingesting of seed data for tests
  */
 [Controller]
 [RequestMapping(value = array("/api/seed"))]
-class SeedController {
+class SeedController(private val seedLoader: SeedDataLoader) {
     /** The logger to use */
     private val log = LoggerFactory.getLogger(javaClass<SeedController>())
     /**
@@ -23,6 +24,7 @@ class SeedController {
     [RequestMapping(method = array(RequestMethod.PUT))]
     fun seed([RequestBody] seed: Seed): ResponseEntity<String> {
         log.info("Ingesting seed data {}", seed)
+        seedLoader.load(seed)
         return ResponseEntity<String>(HttpStatus.CREATED)
     }
 }

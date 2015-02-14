@@ -15,7 +15,7 @@
         <bean id="clock" class="java.time.Clock" factory-method="systemUTC" />
     </beans>
 
-    <beans profile="dev,integrationtest">
+    <beans profile="dev">
         <bean class="org.springframework.beans.factory.config.MethodInvokingBean">
             <property name="targetObject">
                 <bean class="uk.co.grahamcox.elloria.mongodb.SeedDataProcessor">

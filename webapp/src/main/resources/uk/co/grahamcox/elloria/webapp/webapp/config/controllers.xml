@@ -22,6 +22,8 @@
     </bean>
 
     <beans profile="integrationtest">
-        <bean class="uk.co.grahamcox.elloria.webapp.SeedController" />
+        <bean class="uk.co.grahamcox.elloria.webapp.SeedController">
+            <constructor-arg index="0" ref="seedDataLoader" />
+        </bean>
     </beans>
 </beans>
