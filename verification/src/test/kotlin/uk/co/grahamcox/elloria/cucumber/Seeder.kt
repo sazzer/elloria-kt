@@ -2,6 +2,7 @@ package uk.co.grahamcox.elloria.cucumber
 
 import uk.co.grahamcox.elloria.api.seed.Seed
 import org.slf4j.LoggerFactory
+import org.springframework.web.client.RestTemplate
 
 /**
  * Mechanism for sending seed data to the server
@@ -22,5 +23,6 @@ class Seeder {
      */
     fun seed(data: Seed) {
         log.debug("Sending seed data {} to {}", data, seedUrl)
+        RestTemplate().put(seedUrl, data);
     }
 }
