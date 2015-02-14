@@ -116,6 +116,7 @@
                         <properties>
                             <cargo.servlet.port>${port.cargo.http}</cargo.servlet.port>
                             <cargo.tomcat.ajp.port>${port.cargo.ajp}</cargo.tomcat.ajp.port>
+                            <cargo.logging>low</cargo.logging>
                         </properties>
                     </configuration>
                     <container>
