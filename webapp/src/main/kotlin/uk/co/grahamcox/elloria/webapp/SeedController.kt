@@ -21,7 +21,7 @@ class SeedController {
      * Actually consume some seed data
      */
     [RequestMapping(method = array(RequestMethod.PUT))]
-    fun seed([RequestBody] seed: String): ResponseEntity<String> {
+    fun seed([RequestBody] seed: Seed): ResponseEntity<String> {
         log.info("Ingesting seed data {}", seed)
         return ResponseEntity<String>(HttpStatus.CREATED)
     }
