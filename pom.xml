@@ -19,6 +19,7 @@
         <maven>3.0.5</maven>
     </prerequisites>
     <modules>
+        <module>api</module>
         <module>javascript</module>
         <module>webapp</module>
         <module>verification</module>
