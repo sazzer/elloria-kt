@@ -8,10 +8,10 @@
             <column name="user_id" type="BIGINT">
                 <constraints primaryKey="true" />
             </column>
-            <column name="screenName" type="VARCHAR(255)">
+            <column name="screen_name" type="VARCHAR(255)">
                 <constraints nullable="false" />
             </column>
-            <column name="realName" type="VARCHAR(255)">
+            <column name="real_name" type="VARCHAR(255)">
                 <constraints nullable="false" />
             </column>
             <column name="email" type="VARCHAR(255)">
